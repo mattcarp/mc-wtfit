@@ -1,4 +1,4 @@
-# Deploying WTFIT
+# Deploying WTF This
 
 ## Current production (Matt's Hetzner box)
 
@@ -37,4 +37,4 @@ Any machine with Docker: follow "Run it yourself" in the README, put a TLS proxy
 
 ## Sign-in
 
-Clerk is currently a keyless development instance created for WTFIT. Claim it into your Clerk account with the claim link stored in `~/apps/wtfit-secrets/clerk-claim-url.txt` on the box. For launch, create a production instance on the final domain and swap the two `CLERK` keys in `.env` (then rebuild: the publishable key is baked in at build time).
+Clerk is currently a keyless development instance created for WTF This. Claim it into your Clerk account with the claim link stored in `~/apps/wtfit-secrets/clerk-claim-url.txt` on the box. For launch, create a production instance on the final domain and swap the two `CLERK` keys in `.env` (then rebuild: the publishable key is baked in at build time).

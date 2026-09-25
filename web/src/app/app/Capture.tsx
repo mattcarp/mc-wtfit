@@ -19,7 +19,7 @@ async function shrink(file: File): Promise<Blob> {
   } catch { return file; }
 }
 
-const LINES = ['Squinting at it…', 'Checking your drawers, metaphorically…', 'Cross-referencing your life choices…', 'Consulting the fondue council…', 'Deciding its fate…'];
+const LINES = ['Squint at thing…', 'Sniff thing…', 'Check your cave…', 'Consult fondue council…', 'Decide fate of thing…'];
 
 export function Capture({ currency, beneficiary }: { currency: string; beneficiary: string }) {
   const input = useRef<HTMLInputElement>(null);
@@ -55,8 +55,8 @@ export function Capture({ currency, beneficiary }: { currency: string; beneficia
           {!busy && (
             <span className="shutter-btn">
               <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" aria-hidden="true"><path d="M4 8h3l2-3h6l2 3h3v11H4z" /><circle cx="12" cy="13" r="4" /></svg>
-              <span className="display">{preview ? 'Another one' : 'What the fuck is this?'}</span>
-              <span>Tap to take a photo</span>
+              <span className="display">{preview ? 'Another thing' : 'WTF this?'}</span>
+              <span>Tap. Point. Done.</span>
             </span>
           )}
         </button>
@@ -71,8 +71,8 @@ export function Capture({ currency, beneficiary }: { currency: string; beneficia
         ) : (
           <div className="notice">
             <p className="label" style={{ marginTop: 0 }}>How it works</p>
-            <p style={{ margin: '0 0 8px' }}>Point, shoot, done. No typing. WTFIT identifies it, checks it against your profile and your stuff, and gives one verdict: <strong>keep</strong>, <strong>build</strong>, <strong>let it go</strong> or <strong>retake</strong>.</p>
-            <p className="muted" style={{ margin: 0 }}>Anything you let go gets a ready-made listing, and the money goes to {beneficiary === 'you' ? 'you' : beneficiary}.</p>
+            <p style={{ margin: '0 0 8px' }}>Point. Shoot. Done. No typing. WTF This figure out what thing is, check your profile and your stuff, then give one verdict: <strong>keep</strong>, <strong>build</strong>, <strong>let it go</strong> or <strong>retake</strong>.</p>
+            <p className="muted" style={{ margin: 0 }}>Thing you let go get listing written for you. Money go to {beneficiary === 'you' ? 'you' : beneficiary}.</p>
           </div>
         )}
       </div>

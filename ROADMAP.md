@@ -1,4 +1,4 @@
-# WTFIT roadmap
+# WTF This? roadmap
 
 ## Now (v0.1, working)
 - [x] Landing page with waitlist (double opt-in email)

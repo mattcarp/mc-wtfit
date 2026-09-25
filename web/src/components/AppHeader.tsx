@@ -14,7 +14,7 @@ export function AppHeader({ current }: { current: string }) {
   return (
     <header className="app-header">
       <div className="wrap">
-        <Link className="wordmark" href="/">WTFIT</Link>
+        <Link className="wordmark" href="/">WTF THIS</Link>
         <nav className="app-nav" aria-label="App">
           {LINKS.map(l => (
             <Link key={l.href} href={l.href} aria-current={current === l.href ? 'page' : undefined}>{l.label}</Link>

@@ -14,7 +14,7 @@ const FIELDS: { key: string; label: string; hint: string; area?: boolean }[] = [
   { key: 'interests', label: 'Interests', hint: 'What you read about, watch, collect.', area: true },
   { key: 'habits', label: 'Habits', hint: 'e.g. "cook every day", "never print anything", "gym three times a week".', area: true },
   { key: 'goals', label: 'Goals', hint: 'e.g. "get the studio set up", "move to a smaller place", "stop buying gadgets".', area: true },
-  { key: 'gear', label: 'Gear you know you have', hint: 'Anything WTFIT should know about before you start scanning: projectors, tools, consoles, instruments.', area: true },
+  { key: 'gear', label: 'Gear you know you have', hint: 'Anything WTF This should know about before you start scanning: projectors, tools, consoles, instruments.', area: true },
 ];
 
 export function ProfileForm({ initial, consented }: { initial: P; consented: boolean }) {
@@ -47,7 +47,7 @@ export function ProfileForm({ initial, consented }: { initial: P; consented: boo
         <legend>Your projects on GitHub</legend>
         <div className="field">
           <label htmlFor="gh">GitHub username</label>
-          <span className="hint">We read your public repositories&apos; names and descriptions so WTFIT knows what you build. Nothing is written to GitHub.</span>
+          <span className="hint">We read your public repositories&apos; names and descriptions so WTF This knows what you build. Nothing is written to GitHub.</span>
           <div className="actions-row">
             <input id="gh" type="text" autoComplete="off" value={String(p.githubUsername ?? '')} onChange={e => set('githubUsername', e.target.value)} placeholder="e.g. mattcarp" style={{ maxWidth: 280 }} />
             <button type="button" className="btn sm ghost" onClick={loadRepos} disabled={!p.githubUsername}>Load repos</button>
@@ -78,7 +78,7 @@ export function ProfileForm({ initial, consented }: { initial: P; consented: boo
         </div>
         <label className="check">
           <input type="checkbox" checked={consent} onChange={e => { setConsent(e.target.checked); setState('idle'); }} />
-          <span>I explicitly consent to WTFIT processing what I write in this section, including any sensitive information, to make recommendations for me. I can withdraw this by clearing the box and the text.</span>
+          <span>I explicitly consent to WTF This processing what I write in this section, including any sensitive information, to make recommendations for me. I can withdraw this by clearing the box and the text.</span>
         </label>
       </fieldset>
 

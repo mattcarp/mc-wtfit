@@ -16,7 +16,7 @@ export default async function SettingsPage() {
     <>
       <AppHeader current="/app/settings" />
       <main className="wrap app-main">
-        <h1 className="display page-title">Settings.</h1>
+        <h1 className="display page-title">Knobs.</h1>
         <SettingsForm initial={s} keyHint={aiKey ? `${aiKey.slice(0, 4)}…${aiKey.slice(-4)}` : null} shared={shared} defaultBeneficiary={DEFAULT_BENEFICIARY} email={user.email} />
       </main>
     </>

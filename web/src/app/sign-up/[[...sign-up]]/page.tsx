@@ -4,5 +4,5 @@ import { authMode } from '@/lib/auth';
 export const dynamic = 'force-dynamic';
 export default function Page() {
   if (authMode() !== 'clerk') return <main className="wrap app-main"><p>Sign-up is not configured. <Link href="/app">Go to the app</Link></p></main>;
-  return <main className="wrap app-main" style={{ display: 'grid', placeItems: 'center', gap: 24 }}><Link className="wordmark" href="/">WTFIT</Link><SignUp forceRedirectUrl="/app/profile" /></main>;
+  return <main className="wrap app-main" style={{ display: 'grid', placeItems: 'center', gap: 24 }}><Link className="wordmark" href="/">WTF THIS</Link><SignUp forceRedirectUrl="/app/profile" /></main>;
 }

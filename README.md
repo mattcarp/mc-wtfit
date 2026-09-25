@@ -1,20 +1,27 @@
-# mc-wtfit
+# WTF This?
 
-**WTFIT: What The Fuck Is This?**
+**Point phone. Thing judged.**
 
-A genuinely good idea wearing a filthy name.
+A genuinely good idea wearing a filthy name, and bad grammar.
 
-Prototype landing page: https://mattcarpenter.com/wtfit/
+- Site: https://wtfthis.com
+- App: https://wtfit.91-99-2-222.sslip.io (temporary address)
 
 ## About the name
 
-It's the honest reaction everyone has when they open a drawer and find a cable, adapter, hub, or gadget they can't identify. The profanity is aimed at nobody: not people, not groups, not beliefs. It's aimed at the drawer.
+You open a drawer. You find a cable, an adapter, a hub you cannot identify. You say it the way everyone says it, like a caveman holding a mystery rock: **"WTF this?"**
+
+It started life as *WTFIT* ("What The Fuck Is This?"). Then the domain came back one word short, and the missing "is" turned out to be funnier. So the product talks like that too: short words, no articles, verdict first. Headlines grunt. Anything you need to act on (privacy, consent, money) is in plain English.
+
+The profanity is aimed at nobody: not people, not groups, not beliefs. It's aimed at the drawer.
+
+(The repo, Docker services and database are still called `wtfit` internally. Renaming plumbing buys nothing.)
 
 ## What it does
 
 Clean the crap out of your house, and let the stuff you don't need do some good.
 
-Take a photo of anything lying around: a cable, a hub, the fourth projector, a fondue set from 2009. WTFIT tells you:
+Take a photo of anything lying around: a cable, a hub, the fourth projector, a fondue set from 2009. WTF This tells you:
 
 - **What it is**
 - **Whether it's useful to you**, based on your projects, skills, and the gear you already own
@@ -22,7 +29,7 @@ Take a photo of anything lying around: a cable, a hub, the fourth projector, a f
 
 ## Where the money goes
 
-If WTFIT decides you don't need something, this is what happens:
+If WTF This decides you don't need something, this is what happens:
 
 1. **It asks you first.** Nothing is ever listed without your confirmation.
 2. **It lists the item for you** on eBay or the local equivalent, with the description and price written for you.
@@ -49,7 +56,7 @@ The spirit of it: whatever you don't need goes to someone more vulnerable, and s
 
 ## Run it yourself
 
-WTFIT is built to be forked. You need Docker and about two minutes.
+WTF This is built to be forked. You need Docker and about two minutes.
 
 ```sh
 git clone https://github.com/mattcarp/mc-wtfit && cd mc-wtfit

@@ -15,7 +15,7 @@ export default async function ProfilePage() {
     <>
       <AppHeader current="/app/profile" />
       <main className="wrap app-main">
-        <h1 className="display page-title">About you.</h1>
+        <h1 className="display page-title">You. Tell.</h1>
         <p className="prose muted" style={{ marginTop: 0 }}>Everything here is optional, encrypted before it touches the database, and used for one thing only: deciding whether you actually need the stuff you photograph. Share as much or as little as you like. You can export or delete it any time in Settings.</p>
         <ProfileForm initial={profile} consented={!!sensitiveConsentAt} />
       </main>

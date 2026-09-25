@@ -3,9 +3,9 @@ import { ClerkProvider } from '@clerk/nextjs';
 import './globals.css';
 
 export const metadata: Metadata = {
-  title: { default: 'WTFIT', template: '%s · WTFIT' },
-  description: 'Photograph the thing in the drawer. Keep it, build with it, or let it go for a good cause.',
-  appleWebApp: { capable: true, title: 'WTFIT', statusBarStyle: 'default' },
+  title: { default: 'WTF This?', template: '%s · WTF This?' },
+  description: 'Point phone. Thing judged. Keep thing, build thing, or thing go help dogs.',
+  appleWebApp: { capable: true, title: 'WTF This', statusBarStyle: 'default' },
 };
 export const viewport: Viewport = { themeColor: '#D4FF3F', width: 'device-width', initialScale: 1, viewportFit: 'cover' };
 

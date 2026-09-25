@@ -1,20 +1,20 @@
-# WTFIT: Concept
+# WTF This? Concept
 
 *A genuinely good idea wearing a filthy name.*
 
 ## The one rule
 
-**The money goes to those more vulnerable than you.** Built-in, recommended beneficiary: **Gozo SPCA** (Society for the Protection and Care of Animals in Gozo, est. 1976; gozo-spca.org; the island's only charitable rescue for dogs and cats; info@gozo-spca.org). Because WTFIT is open source, each user can change this on the Settings page: pick any charity, or direct the proceeds to themselves (if you're hurting a little and need the money, that's allowed). The default is the animals.
+**The money goes to those more vulnerable than you.** Built-in, recommended beneficiary: **Gozo SPCA** (Society for the Protection and Care of Animals in Gozo, est. 1976; gozo-spca.org; the island's only charitable rescue for dogs and cats; info@gozo-spca.org). Because WTF This is open source, each user can change this on the Settings page: pick any charity, or direct the proceeds to themselves (if you're hurting a little and need the money, that's allowed). The default is the animals.
 
 ### Money flow
 
-1. WTFIT decides you don't need the item, and **asks you first**.
+1. WTF This decides you don't need the item, and **asks you first**.
 2. On confirmation, it lists the item on eBay or the local equivalent (description and price written for you).
 3. Proceeds go to the beneficiary in Settings: Gozo SPCA by default, any charity, or yourself.
 
 ## Scope: anything
 
-Not just tech. Cables and hubs, yes, but also the fondue set, the fourth projector, the rowing machine that became a coat rack. If you can photograph it, WTFIT can judge it.
+Not just tech. Cables and hubs, yes, but also the fondue set, the fourth projector, the rowing machine that became a coat rack. If you can photograph it, WTF This can judge it.
 
 ## The problem
 
@@ -24,7 +24,7 @@ People accumulate stuff (tech especially) they can't identify, can't place, and 
 2. Is it useful to me?
 3. What's the least annoying way to let it go?
 
-WTFIT answers all three from one photo.
+WTF This answers all three from one photo.
 
 ## The core loop
 
@@ -36,7 +36,7 @@ Photo in, verdict out:
 | **Build** | Combine it with things you already own to make something | Save the idea |
 | **Let it go** | No clear use for you | List it; proceeds go to charity (default: Gozo SPCA) |
 
-**Default bias: when in doubt, let it go.** If WTFIT knows what the object is but can't find a place for it in your life, the default is auction, with the money going to the animals.
+**Default bias: when in doubt, let it go.** If WTF This knows what the object is but can't find a place for it in your life, the default is auction, with the money going to the animals.
 
 ### Guardrails on the default
 
