@@ -4,13 +4,13 @@
 
 ## The one rule
 
-**The money goes to those more vulnerable than you.** Built-in, recommended beneficiary: **Animal Welfare Gozo** (the Animal Welfare Section of the Ministry for Gozo, Victoria; rescues and rehomes injured strays). Because WTFIT is open source, each user can change this on the Settings page: pick any charity, or direct the proceeds to themselves (if you're hurting a little and need the money, that's allowed). The default is the animals.
+**The money goes to those more vulnerable than you.** Built-in, recommended beneficiary: **Gozo SPCA** (Society for the Protection and Care of Animals in Gozo, est. 1976; gozo-spca.org; the island's only charitable rescue for dogs and cats; info@gozo-spca.org). Because WTFIT is open source, each user can change this on the Settings page: pick any charity, or direct the proceeds to themselves (if you're hurting a little and need the money, that's allowed). The default is the animals.
 
 ### Money flow
 
 1. WTFIT decides you don't need the item, and **asks you first**.
 2. On confirmation, it lists the item on eBay or the local equivalent (description and price written for you).
-3. Proceeds go to the beneficiary in Settings: Animal Welfare Gozo by default, any charity, or yourself.
+3. Proceeds go to the beneficiary in Settings: Gozo SPCA by default, any charity, or yourself.
 
 ## Scope: anything
 
@@ -34,7 +34,7 @@ Photo in, verdict out:
 |---|---|---|
 | **Keep** | Here's what it is and what it's for in your life | Save to inventory |
 | **Build** | Combine it with things you already own to make something | Save the idea |
-| **Let it go** | No clear use for you | List it; proceeds go to charity (default: Animal Welfare Gozo) |
+| **Let it go** | No clear use for you | List it; proceeds go to charity (default: Gozo SPCA) |
 
 **Default bias: when in doubt, let it go.** If WTFIT knows what the object is but can't find a place for it in your life, the default is auction, with the money going to the animals.
 
@@ -68,7 +68,7 @@ The reveal has attitude. Accurate first, funny second.
 
 - First user: Mattie's three houses, or the public from day one?
 - Platform: phone, web, or both?
-- Charity plumbing: how Animal Welfare Gozo (a government section, not an NGO) accepts donations; user as seller with pledged proceeds; shipping.
+- Charity plumbing: confirm with Gozo SPCA how they want to receive proceeds (they list bank transfer and SMS donations on their site); user as seller with pledged proceeds; shipping.
 - Which marketplace(s) for listings?
 - Domain: wtfit.org and whatthefuckisthis.org were available on 2026-09-25; interim option is a path on mattcarpenter.com.
 

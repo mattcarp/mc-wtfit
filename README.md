@@ -30,7 +30,7 @@ If WTFIT decides you don't need something, this is what happens:
 
 | Setting | Where the money goes |
 |---|---|
-| **Default** | **Animal Welfare Gozo**, who rescue, treat and rehome injured strays across Gozo |
+| **Default** | **[Gozo SPCA](https://gozo-spca.org/)** (Society for the Protection and Care of Animals in Gozo, since 1976), the island's only charitable rescue for dogs and cats |
 | Your choice of charity | Any cause you pick |
 | Yourself | You. If you're hurting a little and need the money, redirect it to yourself. No judgement. |
 
