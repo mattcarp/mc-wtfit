@@ -93,3 +93,7 @@ ROADMAP.md   What's done, what's next (native iPhone and Android apps included)
 ## Status
 
 See [ROADMAP.md](ROADMAP.md).
+
+## License
+
+[MIT](LICENSE). Take it, fork it, change it, sell it, run it for your own town's animal shelter. Just keep the copyright notice. When in doubt, give it to the animals.

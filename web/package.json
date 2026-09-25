@@ -2,6 +2,7 @@
   "name": "wtfit-web",
   "version": "0.1.0",
   "private": true,
+  "license": "MIT",
   "scripts": {
     "copy-site": "node scripts/copy-site.mjs",
     "dev": "npm run copy-site && next dev",
