@@ -4,7 +4,13 @@
 
 ## The one rule
 
-**The money goes to those more vulnerable than you.** Built-in, recommended beneficiary: **Animal Welfare Gozo** (the Animal Welfare Section of the Ministry for Gozo, Victoria; rescues and rehomes injured strays). Because WTFIT is open source, each user can pick any charity, or direct the proceeds to themselves. The default is the animals.
+**The money goes to those more vulnerable than you.** Built-in, recommended beneficiary: **Animal Welfare Gozo** (the Animal Welfare Section of the Ministry for Gozo, Victoria; rescues and rehomes injured strays). Because WTFIT is open source, each user can change this on the Settings page: pick any charity, or direct the proceeds to themselves (if you're hurting a little and need the money, that's allowed). The default is the animals.
+
+### Money flow
+
+1. WTFIT decides you don't need the item, and **asks you first**.
+2. On confirmation, it lists the item on eBay or the local equivalent (description and price written for you).
+3. Proceeds go to the beneficiary in Settings: Animal Welfare Gozo by default, any charity, or yourself.
 
 ## Scope: anything
 
