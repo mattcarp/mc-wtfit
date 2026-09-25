@@ -16,7 +16,7 @@ Take a photo of something lying around your house. WTFIT tells you:
 - **Whether it's useful to you**, based on your projects, skills, and the gear you already own
 - **What to do with it**: keep it, build something with it, or let it go
 
-If there's no place for it in your life, WTFIT helps you list it for auction, and the proceeds go to the Maltese SPCA. When in doubt, give it to the dogs.
+If there's no place for it in your life, WTFIT helps you list it for auction, and by default the proceeds go to Animal Welfare Gozo. You can choose any charity, or keep the money, but when in doubt, give it to the animals.
 
 ## Principles
 

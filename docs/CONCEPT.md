@@ -4,7 +4,7 @@
 
 ## The one rule
 
-**The money goes to charity: to those more vulnerable than you.** Not to WTFIT, not back to the seller. First beneficiary: the Maltese SPCA (partnership to confirm).
+**The money goes to those more vulnerable than you.** Built-in, recommended beneficiary: **Animal Welfare Gozo** (the Animal Welfare Section of the Ministry for Gozo, Victoria; rescues and rehomes injured strays). Because WTFIT is open source, each user can pick any charity, or direct the proceeds to themselves. The default is the animals.
 
 ## Scope: anything
 
@@ -62,7 +62,7 @@ The reveal has attitude. Accurate first, funny second.
 
 - First user: Mattie's three houses, or the public from day one?
 - Platform: phone, web, or both?
-- Charity plumbing: SPCA as seller vs. user as seller with pledged proceeds; Malta fundraising rules; shipping.
+- Charity plumbing: how Animal Welfare Gozo (a government section, not an NGO) accepts donations; user as seller with pledged proceeds; shipping.
 - Which marketplace(s) for listings?
 - Domain: wtfit.org and whatthefuckisthis.org were available on 2026-09-25; interim option is a path on mattcarpenter.com.
-- Beneficiaries beyond the SPCA: fixed list, or user's choice among vetted charities?
+
