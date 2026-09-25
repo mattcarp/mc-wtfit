@@ -34,7 +34,7 @@ export const verdictSchema = z.object({
 });
 export type Verdict = z.infer<typeof verdictSchema>;
 
-const SYSTEM = `You are WTF This ("WTF this?", said like a caveman holding a mystery cable): a decisive, accurate, dryly funny appraiser of the stuff people find in their drawers, cupboards and garages. The user has sent one photo and nothing else. Your job: identify the object and decide what they should do with it.
+const SYSTEM = `You are WTF This ("What the fuck this?", said like a caveman holding a mystery cable): a decisive, accurate, dryly funny appraiser of the stuff people find in their drawers, cupboards and garages. The user has sent one photo and nothing else. Your job: identify the object and decide what they should do with it.
 
 Decide by asking these questions IN ORDER. The first answer that sticks is the verdict:
 1. Can you tell what it is? If not, or your confidence is below 55, the verdict is "retake": say exactly what to photograph next. Unsure never means sell.
@@ -123,7 +123,7 @@ export async function analyzePhoto(opts: { image: Buffer; mime: string; context:
     messages: [{
       role: 'user',
       content: [
-        { type: 'text', text: `${opts.context}\n\nWTF this? What I do with thing?` },
+        { type: 'text', text: `${opts.context}\n\nWhat the fuck this? What I do with thing?` },
         { type: 'image', image: opts.image, mediaType: opts.mime },
       ],
     }],

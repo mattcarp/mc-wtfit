@@ -1,4 +1,4 @@
-# WTF This?
+# What The Fuck This?
 
 **Point phone. Thing judged.**
 
@@ -9,7 +9,7 @@ A genuinely good idea wearing a filthy name, and bad grammar.
 
 ## About the name
 
-You open a drawer. You find a cable, an adapter, a hub you cannot identify. You say it the way everyone says it, like a caveman holding a mystery rock: **"WTF this?"**
+You open a drawer. You find a cable, an adapter, a hub you cannot identify. You say it the way everyone says it, like a caveman holding a mystery rock: **"What the fuck this?"**
 
 It started life as *WTFIT* ("What The Fuck Is This?"). Then the domain came back one word short, and the missing "is" turned out to be funnier. So the product talks like that too: short words, no articles, verdict first. Headlines grunt. Anything you need to act on (privacy, consent, money) is in plain English.
 

@@ -1,7 +1,7 @@
 import type { MetadataRoute } from 'next';
 export default function manifest(): MetadataRoute.Manifest {
   return {
-    name: 'WTF This?',
+    name: 'What The Fuck This?',
     short_name: 'WTF This',
     description: 'Point phone. Thing judged. Keep thing, build thing, or thing go help dogs.',
     start_url: '/app',

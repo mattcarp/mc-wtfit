@@ -55,7 +55,7 @@ export function Capture({ currency, beneficiary }: { currency: string; beneficia
           {!busy && (
             <span className="shutter-btn">
               <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" aria-hidden="true"><path d="M4 8h3l2-3h6l2 3h3v11H4z" /><circle cx="12" cy="13" r="4" /></svg>
-              <span className="display">{preview ? 'Another thing' : 'WTF this?'}</span>
+              <span className="display">{preview ? 'Another thing' : 'What the fuck this?'}</span>
               <span>Tap. Point. Done.</span>
             </span>
           )}

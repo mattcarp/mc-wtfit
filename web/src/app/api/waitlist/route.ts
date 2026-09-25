@@ -49,10 +49,10 @@ export async function POST(req: Request) {
   const link = `${base}/api/waitlist/confirm?token=${encodeURIComponent(row.token)}`;
   const r = await sendEmail({
     to: email,
-    subject: 'WTF this? Click to join tribe',
+    subject: 'What the fuck this? Click. Join tribe.',
     text: `One click. You in tribe:\n\n${link}\n\nNot you? Ignore this email. Nothing happen.\n\nWTF This. Money from thing you let go go to the Gozo SPCA by default.`,
     html: `<div style="font-family:system-ui,sans-serif;max-width:520px;margin:auto;padding:24px;color:#0A0A0B">
-      <p style="font:800 28px/1 Arial Narrow,Arial,sans-serif;text-transform:uppercase;margin:0 0 16px">WTF <span style="background:#D4FF3F">this?</span></p>
+      <p style="font:800 28px/1 Arial Narrow,Arial,sans-serif;text-transform:uppercase;margin:0 0 16px">What the fuck <span style="background:#D4FF3F">this?</span></p>
       <p>One click. You in tribe.</p>
       <p><a href="${esc(link)}" style="display:inline-block;background:#0A0A0B;color:#fff;padding:14px 22px;text-decoration:none">Yes. Me join.</a></p>
       <p style="color:#5C5E63;font-size:14px">Not you? Ignore this email. Nothing happen.<br>Money from thing you let go go to the Gozo SPCA by default.</p></div>`,

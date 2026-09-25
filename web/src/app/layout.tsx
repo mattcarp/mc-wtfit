@@ -3,7 +3,7 @@ import { ClerkProvider } from '@clerk/nextjs';
 import './globals.css';
 
 export const metadata: Metadata = {
-  title: { default: 'WTF This?', template: '%s · WTF This?' },
+  title: { default: 'What The Fuck This?', template: '%s · What The Fuck This?' },
   description: 'Point phone. Thing judged. Keep thing, build thing, or thing go help dogs.',
   appleWebApp: { capable: true, title: 'WTF This', statusBarStyle: 'default' },
 };
