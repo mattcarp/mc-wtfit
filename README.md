@@ -47,13 +47,42 @@ The spirit of it: whatever you don't need goes to someone more vulnerable, and s
 - **A human confirms every listing**
 - Accurate first, funny second
 
+## Run it yourself
+
+WTFIT is built to be forked. You need Docker and about two minutes.
+
+```sh
+git clone https://github.com/mattcarp/mc-wtfit && cd mc-wtfit
+cp .env.example .env
+# Fill in at least: POSTGRES_PASSWORD, ENCRYPTION_KEY (openssl rand -base64 32)
+# Just for you on your own machine? Add AUTH_MODE=local and skip Clerk.
+docker compose up -d --build
+open http://localhost:3000
+```
+
+Then pick a brain in **Settings**: your own Anthropic, OpenAI or Google key, or a local model through Ollama (`openai-compatible`, base URL `http://host.docker.internal:11434/v1`, a vision model such as `llava` or `qwen2.5vl`).
+
+| Piece | What it uses | Needed? |
+|---|---|---|
+| Database | Postgres (bundled, pgvector image) | Yes |
+| Encryption | AES-256-GCM, key in `ENCRYPTION_KEY` | Yes |
+| Sign-in | [Clerk](https://clerk.com), or `AUTH_MODE=local` for one owner | For public servers |
+| Email | [Resend](https://resend.com) for waitlist confirmations; logs instead if unset | Optional |
+| AI | Per-user key, or a shared server model with a daily cap | One of the two |
+
+### Project layout
+
+```
+site/        Static landing page (also served by the app at /)
+web/         The app: Next.js, API routes, migrations, Dockerfile
+docs/        Concept
+ROADMAP.md   What's done, what's next (native iPhone and Android apps included)
+```
+
+### Tests
+
+`web/tests/e2e.sh` runs a full smoke test (analyze, photo, profile, sold, export, waitlist, delete) against a server in local mode with the mock model in `web/tests/mock-llm.mjs`.
+
 ## Status
 
-| Piece | State |
-|---|---|
-| Concept | [`docs/CONCEPT.md`](docs/CONCEPT.md) |
-| Landing page | [`site/`](site/), live at mattcarpenter.com/wtfit |
-| App (photo → verdict) | Not started |
-| Settings page (beneficiary choice) | Not started |
-| Marketplace listing (eBay etc.) | Not started |
-| Storage | Planned: Postgres for items and verdicts, object storage for photos |
+See [ROADMAP.md](ROADMAP.md).
