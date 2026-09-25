@@ -2,9 +2,17 @@
 
 *A genuinely good idea wearing a filthy name.*
 
+## The one rule
+
+**The money goes to charity: to those more vulnerable than you.** Not to WTFIT, not back to the seller. First beneficiary: the Maltese SPCA (partnership to confirm).
+
+## Scope: anything
+
+Not just tech. Cables and hubs, yes, but also the fondue set, the fourth projector, the rowing machine that became a coat rack. If you can photograph it, WTFIT can judge it.
+
 ## The problem
 
-People accumulate tech they can't identify, can't place, and can't be bothered to get rid of. Three questions keep it in the drawer:
+People accumulate stuff (tech especially) they can't identify, can't place, and can't be bothered to get rid of. Three questions keep it in the drawer:
 
 1. What is it?
 2. Is it useful to me?
@@ -56,3 +64,5 @@ The reveal has attitude. Accurate first, funny second.
 - Platform: phone, web, or both?
 - Charity plumbing: SPCA as seller vs. user as seller with pledged proceeds; Malta fundraising rules; shipping.
 - Which marketplace(s) for listings?
+- Domain: wtfit.org and whatthefuckisthis.org were available on 2026-09-25; interim option is a path on mattcarpenter.com.
+- Beneficiaries beyond the SPCA: fixed list, or user's choice among vetted charities?
