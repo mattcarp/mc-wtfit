@@ -28,7 +28,7 @@ Photo in, verdict out:
 |---|---|---|
 | **Keep** | Here's what it is and what it's for in your life | Save to inventory |
 | **Build** | Combine it with things you already own to make something | Save the idea |
-| **Let it go** | No clear use for you | List it; proceeds go to the Maltese SPCA |
+| **Let it go** | No clear use for you | List it; proceeds go to charity (default: Animal Welfare Gozo) |
 
 **Default bias: when in doubt, let it go.** If WTFIT knows what the object is but can't find a place for it in your life, the default is auction, with the money going to the animals.
 
