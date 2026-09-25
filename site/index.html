@@ -8,6 +8,7 @@
 <meta property="og:title" content="WTFIT — What The Fuck Is This?">
 <meta property="og:description" content="One photo in. One verdict out. Keep it, build with it, or let it go for a good cause.">
 <meta name="theme-color" content="#D4FF3F">
+<meta name="wtfit-app" content="https://wtfit.91-99-2-222.sslip.io">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23D4FF3F'/%3E%3Ctext x='16' y='23' font-family='Arial Black,Arial' font-weight='900' font-size='20' text-anchor='middle'%3E%3F%3C/text%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -24,7 +25,7 @@
       <a href="#how">How it decides</a>
       <a href="#drawer">The drawer</a>
       <a href="#rule">The rule</a>
-      <a class="btn sm" href="#join">Get early access</a>
+      <a class="btn sm" href="/app" data-app-link>Open the app</a>
     </nav>
   </div>
 </header>
@@ -39,8 +40,9 @@
       <div>
         <p class="lede">Point your phone at the thing in the drawer. WTFIT tells you what it is, whether it belongs in your life, and if it doesn't, turns it into money for someone who needs it more than you do.</p>
         <div class="actions">
-          <a class="btn" href="#join">Get early access</a>
-          <a class="btn ghost" href="#how">See how it decides</a>
+          <a class="btn" href="/app" data-app-link>Try it now</a>
+          <a class="btn ghost" href="#join">Join the list</a>
+          
         </div>
         <div class="hero-meta">
           <div><span class="label">In</span><strong>One photo</strong></div>
@@ -199,13 +201,13 @@
       <h2 class="display">Got a drawer?</h2>
       <p>WTFIT is in early development in Malta. Leave your email and we'll tell you when it can see your stuff.</p>
     </div>
-    <!-- TODO: connect to a waitlist service (e.g. Buttondown, Formspree). Static site: no backend yet. -->
-    <form id="join-form" action="#" method="post">
+    <form id="join-form" action="/api/waitlist" method="post" novalidate>
       <label for="email">Email</label>
       <div class="field">
         <input id="email" name="email" type="email" required placeholder="you@example.com" autocomplete="email">
         <button class="btn" type="submit">Notify me</button>
       </div>
+      <p id="join-msg" role="status" aria-live="polite" style="margin:4px 0 0;font:500 14px var(--mono);color:#D4FF3F;min-height:20px"></p>
     </form>
   </div>
 </section>
@@ -249,9 +251,26 @@
   }
   $('t-prev').addEventListener('click', function () { show(i - 1); });
   $('t-next').addEventListener('click', function () { show(i + 1); });
-  $('join-form').addEventListener('submit', function (e) {
+  var app = (document.querySelector('meta[name="wtfit-app"]') || {}).content || '';
+  document.querySelectorAll('[data-app-link]').forEach(function (a) { a.href = app + '/app'; });
+  var msg = $('join-msg'), form = $('join-form');
+  var q = new URLSearchParams(location.search).get('waitlist');
+  if (q === 'confirmed') msg.textContent = "Confirmed. You're on the list.";
+  if (q === 'invalid') msg.textContent = 'That link has expired. Sign up again below.';
+  form.addEventListener('submit', function (e) {
     e.preventDefault();
-    this.querySelector('button').textContent = 'Noted. Thanks.';
+    var btn = form.querySelector('button'), email = $('email').value.trim();
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)) { msg.textContent = 'That email looks off.'; return; }
+    btn.disabled = true; msg.textContent = 'Sending…';
+    fetch(app + '/api/waitlist', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ email: email, source: 'landing' }) })
+      .then(function (r) { return r.json().then(function (d) { return { ok: r.ok, d: d }; }); })
+      .then(function (x) {
+        if (!x.ok) throw new Error(x.d.error || 'Something went wrong');
+        msg.textContent = x.d.status === 'check-inbox' ? 'Check your inbox and click the link.' : x.d.status === 'already-confirmed' ? "You're already on the list." : "You're on the list.";
+        form.reset();
+      })
+      .catch(function (err) { msg.textContent = err.message || 'Could not reach the server. Try again.'; })
+      .finally(function () { btn.disabled = false; });
   });
 })();
 </script>

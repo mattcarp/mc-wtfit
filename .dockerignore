@@ -1,0 +1,9 @@
+**/node_modules
+**/.next
+web/data
+.git
+.shots
+*.log
+.env
+.env.*
+!.env.example
