@@ -67,7 +67,7 @@ Then pick a brain in **Settings**: your own Anthropic, OpenAI or Google key, or 
 | Database | Postgres (bundled, pgvector image) | Yes |
 | Encryption | AES-256-GCM, key in `ENCRYPTION_KEY` | Yes |
 | Sign-in | [Clerk](https://clerk.com), or `AUTH_MODE=local` for one owner | For public servers |
-| Email | [Resend](https://resend.com) for waitlist confirmations; logs instead if unset | Optional |
+| Email | [Resend](https://resend.com) for waitlist confirmations. Without Resend but with Clerk, joining the waitlist sends a Clerk sign-up invitation instead. With neither, emails are logged | Optional |
 | AI | Per-user key, or a shared server model with a daily cap | One of the two |
 
 ### Project layout

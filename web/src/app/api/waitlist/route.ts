@@ -35,6 +35,17 @@ export async function POST(req: Request) {
   if (row.confirmed_at) return Response.json({ ok: true, status: 'already-confirmed' }, { headers: h });
 
   const base = process.env.APP_URL || new URL(req.url).origin;
+
+  // No Resend key but Clerk is on: let Clerk send the email, as an invitation to sign up.
+  if (!process.env.RESEND_API_KEY && process.env.CLERK_SECRET_KEY) {
+    const inv = await clerkInvite(email, `${base}/sign-up`);
+    if (inv.ok) {
+      await sql`update waitlist set source = ${`${source.slice(0, 30)}+invite`} where email = ${email}`;
+      return Response.json({ ok: true, status: 'check-inbox' }, { headers: h });
+    }
+    console.error('[waitlist] clerk invitation failed', inv.error);
+  }
+
   const link = `${base}/api/waitlist/confirm?token=${encodeURIComponent(row.token)}`;
   const r = await sendEmail({
     to: email,
@@ -47,4 +58,17 @@ export async function POST(req: Request) {
       <p style="color:#5C5E63;font-size:14px">If this wasn't you, ignore this email and nothing happens.<br>Proceeds from things you let go go to the Gozo SPCA by default.</p></div>`,
   });
   return Response.json({ ok: true, status: r.sent ? 'check-inbox' : 'saved' }, { headers: h });
+}
+
+async function clerkInvite(email: string, redirectUrl: string): Promise<{ ok: boolean; error?: string }> {
+  const r = await fetch('https://api.clerk.com/v1/invitations', {
+    method: 'POST',
+    headers: { Authorization: `Bearer ${process.env.CLERK_SECRET_KEY}`, 'Content-Type': 'application/json' },
+    body: JSON.stringify({ email_address: email, redirect_url: redirectUrl, notify: true, ignore_existing: true, public_metadata: { source: 'wtfit-waitlist' } }),
+  });
+  if (r.ok) return { ok: true };
+  const body = await r.text();
+  // Already invited or already a user: treat as success, they already have a way in.
+  if (r.status === 422 && /duplicate|already|exists/i.test(body)) return { ok: true };
+  return { ok: false, error: `${r.status} ${body.slice(0, 300)}` };
 }

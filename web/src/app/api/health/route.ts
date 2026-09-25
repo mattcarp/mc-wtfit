@@ -6,7 +6,7 @@ export async function GET() {
   try { await sql`select 1`; db = true; } catch {}
   return Response.json({
     ok: db, db, auth: authMode(),
-    email: !!process.env.RESEND_API_KEY,
+    email: process.env.RESEND_API_KEY ? 'resend' : process.env.CLERK_SECRET_KEY ? 'clerk-invitations' : 'log-only',
     sharedModel: !!process.env.SERVER_AI_PROVIDER,
     encryption: !!process.env.ENCRYPTION_KEY,
   }, { status: db ? 200 : 503 });
