@@ -7,9 +7,9 @@ export default function Privacy() {
   return (
     <main className="wrap app-main">
       <p className="label"><Link href="/">← WTF This</Link></p>
-      <h1 className="display page-title">Privacy. No grunting.</h1>
+      <h1 className="display page-title">Privacy, plainly.</h1>
       <div className="prose">
-        <p>We drop the caveman voice here, because this part matters. WTF This needs to know a little about you to tell you whether you need the things you photograph. This page explains what it keeps, why, and how to take it all back.</p>
+        <p>WTF This needs to know a little about you to tell you whether you need the things you photograph. This page explains what it keeps, why, and how to take it all back.</p>
         <h2>What we keep</h2>
         <ul>
           <li><strong>Your account:</strong> email address and a user ID, handled by our sign-in provider (Clerk).</li>

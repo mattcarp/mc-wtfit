@@ -1,6 +1,6 @@
 # What The Fuck This?
 
-**Point phone. Thing judged.**
+**Photograph it. Keep it, build with it, or let it go for a good cause.**
 
 A genuinely good idea wearing a filthy name, and bad grammar.
 
@@ -11,7 +11,7 @@ A genuinely good idea wearing a filthy name, and bad grammar.
 
 You open a drawer. You find a cable, an adapter, a hub you cannot identify. You say it the way everyone says it, like a caveman holding a mystery rock: **"What the fuck this?"**
 
-It started life as *WTFIT* ("What The Fuck Is This?"). Then the domain came back one word short, and the missing "is" turned out to be funnier. So the product talks like that too: short words, no articles, verdict first. Headlines grunt. Anything you need to act on (privacy, consent, money) is in plain English.
+It started life as *WTFIT* ("What The Fuck Is This?"). Then the domain came back one word short, and the missing "is" turned out to be funnier. The caveman lives in the name and the headline. Everything else is plain English.
 
 The profanity is aimed at nobody: not people, not groups, not beliefs. It's aimed at the drawer.
 

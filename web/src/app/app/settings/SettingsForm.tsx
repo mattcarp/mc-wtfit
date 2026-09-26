@@ -43,7 +43,7 @@ export function SettingsForm({ initial, keyHint, shared, defaultBeneficiary, ema
     <div className="form">
       <form className="form" onSubmit={save}>
         <fieldset className="fieldset">
-          <legend>Where money go</legend>
+          <legend>Where the money goes</legend>
           <div className="radio-row" role="radiogroup" aria-label="Beneficiary">
             <label className="radio"><input type="radio" name="b" checked={s.beneficiaryKind === 'default'} onChange={() => upd('beneficiaryKind', 'default')} />
               <span><strong>{defaultBeneficiary.name}</strong> (default)<br /><span className="muted">Gozo&apos;s only charitable rescue for dogs and cats, since 1976. <a href={defaultBeneficiary.url} target="_blank" rel="noreferrer">gozo-spca.org</a></span></span></label>
@@ -87,7 +87,7 @@ export function SettingsForm({ initial, keyHint, shared, defaultBeneficiary, ema
         </fieldset>
 
         <fieldset className="fieldset">
-          <legend>Big brain</legend>
+          <legend>The brain</legend>
           <div className="radio-row" role="radiogroup" aria-label="AI provider">
             {PROVIDERS.map(p => (
               <label className="radio" key={p.v}>

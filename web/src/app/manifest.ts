@@ -3,7 +3,7 @@ export default function manifest(): MetadataRoute.Manifest {
   return {
     name: 'What The Fuck This?',
     short_name: 'WTF This',
-    description: 'Point phone. Thing judged. Keep thing, build thing, or thing go help dogs.',
+    description: 'Photograph it. Keep it, build with it, or let it go for a good cause.',
     start_url: '/app',
     scope: '/',
     display: 'standalone',

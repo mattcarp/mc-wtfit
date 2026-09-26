@@ -10,9 +10,9 @@ function money(n: number, currency: string) {
 export function VerdictTag({ v, currency, beneficiary, evidenceNo, footer }: { v: Verdict; currency: string; beneficiary: string; evidenceNo?: string; footer?: React.ReactNode }) {
   const range = v.valueLow === v.valueHigh ? money(v.valueLow, currency) : `${money(v.valueLow, currency)}–${money(v.valueHigh, currency).replace(/^[^\d]+/, '')}`;
   const note = v.verdict === 'let_go'
-    ? `Listing written. You say yes, money go to ${beneficiary === 'you' ? 'you' : beneficiary}.`
-    : v.verdict === 'retake' ? 'Too unsure. Nothing sold on a guess.'
-    : v.verdict === 'build' ? 'Idea saved in your stuff.' : 'Thing saved to your list.';
+    ? `Listing written. Once you confirm, the proceeds go to ${beneficiary === 'you' ? 'you' : beneficiary}.`
+    : v.verdict === 'retake' ? 'Too unsure to judge. Nothing gets sold on a guess.'
+    : v.verdict === 'build' ? 'Saved as an idea in your stuff.' : 'Saved to your inventory.';
   return (
     <article className="tag" aria-label="Verdict">
       <div className="tag-head">
@@ -29,10 +29,10 @@ export function VerdictTag({ v, currency, beneficiary, evidenceNo, footer }: { v
           <div className="row"><dt>Condition</dt><dd>{v.condition}</dd></div>
           <div className="row"><dt>Why</dt><dd>{v.reason}</dd></div>
         </dl>
-        {v.jobInYourLife && <div className="callout"><strong>Job of thing</strong>{v.jobInYourLife}</div>}
-        {v.buildIdea && <div className="callout"><strong>Make new thing</strong>{v.buildIdea}{v.pairsWith.length > 0 && <div className="muted" style={{ marginTop: 6 }}>Pairs with: {v.pairsWith.join(', ')}</div>}</div>}
+        {v.jobInYourLife && <div className="callout"><strong>Its job in your life</strong>{v.jobInYourLife}</div>}
+        {v.buildIdea && <div className="callout"><strong>Build idea</strong>{v.buildIdea}{v.pairsWith.length > 0 && <div className="muted" style={{ marginTop: 6 }}>Pairs with: {v.pairsWith.join(', ')}</div>}</div>}
         {v.retakeTip && <div className="callout"><strong>Retake</strong>{v.retakeTip}</div>}
-        {v.wipeChecklist.length > 0 && <div className="callout"><strong>Wipe before go</strong><ul>{v.wipeChecklist.map((s, i) => <li key={i}>{s}</li>)}</ul></div>}
+        {v.wipeChecklist.length > 0 && <div className="callout"><strong>Wipe before it ships</strong><ul>{v.wipeChecklist.map((s, i) => <li key={i}>{s}</li>)}</ul></div>}
       </div>
       <div className="tag-foot">
         <span className={`stamp ${v.verdict}`}>{VERDICT_WORD[v.verdict]}</span>

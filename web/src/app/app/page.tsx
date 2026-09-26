@@ -19,7 +19,7 @@ export default async function ScanPage() {
       <main className="wrap app-main">
         {!updatedAt && (
           <div className="banner">
-            <span><strong>Two minutes, much better verdicts.</strong> Tell WTF This what you like, so it know what you really use.</span>
+            <span><strong>Two minutes, much better verdicts.</strong> Tell WTF This what you're into, so it knows what you actually use.</span>
             <Link className="btn sm" href="/app/profile">Fill in profile</Link>
           </div>
         )}

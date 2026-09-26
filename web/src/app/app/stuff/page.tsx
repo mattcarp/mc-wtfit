@@ -23,7 +23,7 @@ export default async function StuffPage() {
     <>
       <AppHeader current="/app/stuff" />
       <main className="wrap app-main">
-        <h1 className="display page-title">Your thing.</h1>
+        <h1 className="display page-title">Your stuff.</h1>
         <div className="stats">
           <div><span className="label">Items</span><strong>{items.length}</strong></div>
           <div><span className="label">Let go</span><strong>{letGo}</strong></div>
@@ -31,7 +31,7 @@ export default async function StuffPage() {
           <div><span className="label">Raised for {who}</span><strong>{money(raised, settings.currency)}</strong></div>
         </div>
         {items.length === 0 ? (
-          <div className="empty"><p className="display" style={{ fontSize: 40 }}>No thing yet.</p><p>Go. Find weird thing in drawer.</p><Link className="btn" href="/app">Scan thing</Link></div>
+          <div className="empty"><p className="display" style={{ fontSize: 40 }}>Nothing yet.</p><p>Go find something weird in a drawer.</p><Link className="btn" href="/app">Scan something</Link></div>
         ) : (
           <div className="ledger-wrap">
             <table className="ledger">

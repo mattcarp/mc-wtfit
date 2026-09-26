@@ -4,7 +4,7 @@ import './globals.css';
 
 export const metadata: Metadata = {
   title: { default: 'What The Fuck This?', template: '%s · What The Fuck This?' },
-  description: 'Point phone. Thing judged. Keep thing, build thing, or thing go help dogs.',
+  description: 'Photograph the thing in the drawer. Keep it, build with it, or let it go for a good cause.',
   appleWebApp: { capable: true, title: 'WTF This', statusBarStyle: 'default' },
 };
 export const viewport: Viewport = { themeColor: '#D4FF3F', width: 'device-width', initialScale: 1, viewportFit: 'cover' };
