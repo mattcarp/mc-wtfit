@@ -14,6 +14,10 @@ export async function PATCH(req: Request, ctx: Ctx) {
     const item = await getItem(user.id, id);
     if (!item) return fail('Not found', 404);
     const b = await req.json().catch(() => ({}));
+    if (b.proceedsSent !== undefined) {
+      const [r] = await sql`update items set proceeds_sent_at = ${b.proceedsSent ? sql`now()` : null}, updated_at = now() where id = ${id} and user_id = ${user.id} returning id, proceeds_sent_at`;
+      return json(r);
+    }
     const status = b.status && STATUSES.has(b.status) ? b.status : item.status;
     const verdict = b.verdict && VERDICTS.has(b.verdict) ? b.verdict : item.verdict;
     let sold: number | null = item.sold_amount == null ? null : Number(item.sold_amount);

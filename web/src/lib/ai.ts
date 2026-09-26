@@ -4,7 +4,7 @@ import { createAnthropic } from '@ai-sdk/anthropic';
 import { createGoogleGenerativeAI } from '@ai-sdk/google';
 import { createOpenAI } from '@ai-sdk/openai';
 import { z } from 'zod';
-import type { Profile, Settings } from './data';
+import { filterRepos, type Profile, type Settings } from './data';
 
 export const verdictSchema = z.object({
   identified: z.boolean().describe('false if you genuinely cannot tell what the object is'),
@@ -100,8 +100,9 @@ export function buildContext(opts: { profile: Profile; inventory: InventoryLine[
   add('Homes', p.homes); add('Household', p.household); add('Projects', p.projects); add('Skills', p.skills);
   add('Hobbies', p.hobbies); add('Interests', p.interests); add('Habits', p.habits); add('Goals', p.goals);
   add('Gear they mention', p.gear); add('Other context they chose to share', p.anythingElse);
-  if (p.repos?.length) {
-    lines.push('GitHub repositories (their projects):\n' + p.repos.slice(0, 40).map(r =>
+  const repos = filterRepos(p);
+  if (repos.length) {
+    lines.push('GitHub repositories (their projects):\n' + repos.slice(0, 40).map(r =>
       `- ${r.name}${r.language ? ` [${r.language}]` : ''}${r.description ? `: ${r.description.slice(0, 140)}` : ''}`).join('\n'));
   }
   const inv = opts.inventory.filter(i => i.name && i.status !== 'sold' && i.status !== 'donated' && i.status !== 'discarded')

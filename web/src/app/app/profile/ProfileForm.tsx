@@ -2,7 +2,7 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 
-type P = Record<string, unknown> & { repos?: { name: string }[]; reposFetchedAt?: string };
+type P = Record<string, unknown> & { repos?: { name: string; private?: boolean }[]; reposFetchedAt?: string; hasGithubToken?: boolean };
 
 const FIELDS: { key: string; label: string; hint: string; area?: boolean }[] = [
   { key: 'displayName', label: 'What should we call you?', hint: 'Optional.' },
@@ -23,14 +23,20 @@ export function ProfileForm({ initial, consented }: { initial: P; consented: boo
   const [consent, setConsent] = useState(consented);
   const [state, setState] = useState<'idle' | 'saving' | 'saved' | 'error'>('idle');
   const [msg, setMsg] = useState('');
-  const [gh, setGh] = useState<string>(initial.repos ? `${initial.repos.length} repos loaded` : '');
+  const [gh, setGh] = useState<string>(initial.repos ? `${initial.repos.length} repos loaded${initial.repos.some(r => r.private) ? ` (${initial.repos.filter(r => r.private).length} private)` : ''}` : '');
+  const [token, setToken] = useState('');
+  const [clearToken, setClearToken] = useState(false);
   const set = (k: string, v: string) => { setP(x => ({ ...x, [k]: v })); setState('idle'); };
 
   async function save(e?: React.FormEvent) {
     e?.preventDefault();
     setState('saving'); setMsg('');
-    const r = await fetch('/api/profile', { method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ profile: p, sensitiveConsent: consent }) });
+    const body: Record<string, unknown> = { profile: p, sensitiveConsent: consent };
+    if (token.trim()) body.githubToken = token.trim(); else if (clearToken) body.githubToken = '';
+    const r = await fetch('/api/profile', { method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) });
     if (!r.ok) { setState('error'); setMsg((await r.json().catch(() => ({}))).error || 'Could not save'); return false; }
+    if (token.trim()) setP(x => ({ ...x, hasGithubToken: true })); else if (clearToken) setP(x => ({ ...x, hasGithubToken: false }));
+    setToken(''); setClearToken(false);
     setState('saved'); router.refresh(); return true;
   }
   async function loadRepos() {
@@ -38,7 +44,7 @@ export function ProfileForm({ initial, consented }: { initial: P; consented: boo
     setGh('Fetching…');
     const r = await fetch('/api/profile/github', { method: 'POST' });
     const d = await r.json().catch(() => ({}));
-    setGh(r.ok ? `${d.count} repos loaded: ${d.repos.join(', ')}${d.count > d.repos.length ? '…' : ''}` : d.error || 'Failed');
+    setGh(r.ok ? `${d.count} repos loaded${d.private ? ` (${d.private} private)` : ''}: ${d.repos.join(', ')}${d.count > d.repos.length ? '…' : ''}` : d.error || 'Failed');
   }
 
   return (
@@ -47,12 +53,28 @@ export function ProfileForm({ initial, consented }: { initial: P; consented: boo
         <legend>Your projects on GitHub</legend>
         <div className="field">
           <label htmlFor="gh">GitHub username</label>
-          <span className="hint">We read your public repositories&apos; names and descriptions so WTF This knows what you build. Nothing is written to GitHub.</span>
+          <span className="hint">We read your public repositories&apos; names and descriptions so WTF This knows what you build. Nothing is written to GitHub, and code is never read.</span>
           <div className="actions-row">
             <input id="gh" type="text" autoComplete="off" value={String(p.githubUsername ?? '')} onChange={e => set('githubUsername', e.target.value)} placeholder="e.g. mattcarp" style={{ maxWidth: 280 }} />
-            <button type="button" className="btn sm ghost" onClick={loadRepos} disabled={!p.githubUsername}>Load repos</button>
+            <button type="button" className="btn sm ghost" onClick={loadRepos} disabled={!p.githubUsername && !p.hasGithubToken && !token.trim()}>Load repos</button>
           </div>
           {gh && <span className="hint mono">{gh}</span>}
+        </div>
+        <div className="field">
+          <label htmlFor="ghtoken">Private repos too? (optional)</label>
+          <span className="hint" id="ghtoken-h">
+            Create a <a href="https://github.com/settings/personal-access-tokens/new" target="_blank" rel="noreferrer">fine-grained token</a> on GitHub:
+            choose <strong>All repositories</strong> (or pick some), leave every permission at <strong>No access</strong> except <strong>Metadata: Read-only</strong>, and set an expiry.
+            That lets WTF This read repo <em>names and descriptions</em> only. It cannot read your code or change anything. Encrypted here; revoke it on GitHub any time.
+            {p.hasGithubToken ? ' A token is saved.' : ''}
+          </span>
+          <input id="ghtoken" type="password" autoComplete="off" aria-describedby="ghtoken-h" value={token} onChange={e => { setToken(e.target.value); setState('idle'); }} placeholder={p.hasGithubToken ? 'Leave blank to keep the saved token' : 'github_pat_…'} />
+          {p.hasGithubToken && <label className="check"><input type="checkbox" checked={clearToken} onChange={e => setClearToken(e.target.checked)} /> <span>Remove my saved token</span></label>}
+        </div>
+        <div className="field">
+          <label htmlFor="repoFilter">Only use some repos (optional)</label>
+          <span className="hint" id="rf-h">Comma-separated words. Only repos whose names contain one of them are used, e.g. <code>home, audio, synth</code>. Blank means all.</span>
+          <input id="repoFilter" type="text" aria-describedby="rf-h" value={String(p.repoFilter ?? '')} onChange={e => set('repoFilter', e.target.value)} />
         </div>
       </fieldset>
 

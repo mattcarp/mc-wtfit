@@ -16,7 +16,7 @@ export async function GET() {
     const body = {
       exportedAt: new Date().toISOString(),
       account: user,
-      profile, profileUpdatedAt: updatedAt, sensitiveConsentAt,
+      profile: { ...profile, githubToken: profile.githubToken ? `${profile.githubToken.slice(0, 11)}…` : undefined }, profileUpdatedAt: updatedAt, sensitiveConsentAt,
       settings: { ...s, aiKey: aiKey ? `${aiKey.slice(0, 4)}…${aiKey.slice(-4)}` : null },
       items: items.map(i => ({ ...i, photo: `/api/photos/${i.id}` })),
     };

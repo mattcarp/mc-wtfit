@@ -2,6 +2,7 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import type { Settings } from '@/lib/data';
+import { MARKETPLACES } from '@/lib/marketplaces';
 
 const PROVIDERS = [
   { v: 'server', label: 'Shared default', hint: 'The model this server provides. Free, with a daily limit.' },
@@ -52,16 +53,36 @@ export function SettingsForm({ initial, keyHint, shared, defaultBeneficiary, ema
               <span><strong>Me</strong><br /><span className="muted">Having a rough patch and need the money? It&apos;s yours. No judgement.</span></span></label>
           </div>
           {s.beneficiaryKind === 'charity' && (
-            <div className="two">
-              <div className="field"><label htmlFor="bn">Charity name</label><input id="bn" type="text" value={s.beneficiaryName ?? ''} onChange={e => upd('beneficiaryName', e.target.value)} required /></div>
-              <div className="field"><label htmlFor="bu">Website</label><input id="bu" type="url" value={s.beneficiaryUrl ?? ''} onChange={e => upd('beneficiaryUrl', e.target.value)} placeholder="https://" /></div>
-            </div>
+            <>
+              <div className="two">
+                <div className="field"><label htmlFor="bn">Charity name</label><input id="bn" type="text" value={s.beneficiaryName ?? ''} onChange={e => upd('beneficiaryName', e.target.value)} required /></div>
+                <div className="field"><label htmlFor="bu">Website</label><input id="bu" type="url" value={s.beneficiaryUrl ?? ''} onChange={e => upd('beneficiaryUrl', e.target.value)} placeholder="https://" /></div>
+              </div>
+              <p className="hint" style={{ margin: 0 }}>How they take donations. WTF This never handles money: after a sale it shows you these details so sending the proceeds takes one tap. Fill in any you have.</p>
+              <div className="two">
+                <div className="field"><label htmlFor="iban">IBAN</label><input id="iban" type="text" inputMode="text" autoComplete="off" value={s.beneficiaryIban ?? ''} onChange={e => upd('beneficiaryIban', e.target.value)} placeholder="MT00 XXXX 0000 0000 0000 0000 0000 000" /></div>
+                <div className="field"><label htmlFor="bic">BIC / SWIFT</label><input id="bic" type="text" autoComplete="off" value={s.beneficiaryBic ?? ''} onChange={e => upd('beneficiaryBic', e.target.value)} placeholder="Optional" /></div>
+              </div>
+              <div className="two">
+                <div className="field"><label htmlFor="rev">Revolut link</label><input id="rev" type="url" value={s.beneficiaryRevolut ?? ''} onChange={e => upd('beneficiaryRevolut', e.target.value)} placeholder="https://revolut.me/…" /></div>
+                <div className="field"><label htmlFor="wise">Wise link</label><input id="wise" type="url" value={s.beneficiaryWise ?? ''} onChange={e => upd('beneficiaryWise', e.target.value)} placeholder="https://wise.com/pay/…" /></div>
+              </div>
+            </>
           )}
-          <div className="field" style={{ maxWidth: 220 }}>
+          {s.beneficiaryKind === 'self' && <p className="hint" style={{ margin: 0 }}>Nothing to set up: when something sells, the buyer pays you directly on the marketplace.</p>}
+          <div className="two">
+          <div className="field">
+            <label htmlFor="mkt">Where you sell</label>
+            <select id="mkt" value={s.marketplace} onChange={e => upd('marketplace', e.target.value)}>
+              {MARKETPLACES.map(m => <option key={m.id} value={m.id}>{m.label}</option>)}
+            </select>
+          </div>
+          <div className="field">
             <label htmlFor="cur">Currency</label>
             <select id="cur" value={s.currency} onChange={e => upd('currency', e.target.value)}>
               {['EUR', 'GBP', 'USD', 'CHF', 'SEK', 'NOK', 'DKK', 'PLN', 'CAD', 'AUD'].map(c => <option key={c}>{c}</option>)}
             </select>
+          </div>
           </div>
         </fieldset>
 

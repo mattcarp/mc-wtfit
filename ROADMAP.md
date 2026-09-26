@@ -11,7 +11,13 @@
 - [x] Installable on iPhone and Android as a web app (Add to Home Screen)
 - [x] Docker Compose: fork, fill in `.env`, `docker compose up`
 
+## Just added
+- [x] Private GitHub repos via the user's own read-only token (Metadata: Read-only; names and descriptions only, never code), plus a repo filter
+- [x] "Where you sell" preference (eBay UK/DE/US, MaltaPark, Facebook Marketplace, Vinted) and a **Sell it** button: copies the listing and opens the sell page. Two taps
+- [x] Payout details: after a sale, "Send €X to the Gozo SPCA" with IBAN (checksum-validated), Revolut and Wise links. Forks set their own default beneficiary in `.env`. WTF This never touches the money
+
 ## Next
+- [ ] eBay Sell API: post listings directly from the app after the user connects their eBay account (needs an eBay developer app)
 - [ ] Clerk production instance on the final domain
 - [ ] Resend sending domain verified on the final domain
 - [ ] Final domain (see README) and move the app to it

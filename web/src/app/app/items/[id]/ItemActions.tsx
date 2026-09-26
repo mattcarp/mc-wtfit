@@ -2,12 +2,23 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 
-export function ItemActions(p: { id: string; status: string; verdict: string | null; currency: string; listingText: string; beneficiary: string; soldAmount: number | null }) {
+type Payout = { name: string; url: string | null; iban: string | null; bic: string | null; revolut: string | null; wise: string | null; note: string | null };
+
+export function ItemActions(p: { id: string; status: string; verdict: string | null; currency: string; listingText: string; beneficiary: string; soldAmount: number | null;
+  market: { label: string; sellUrl: string | null }; payout: Payout | null; proceedsSent: boolean }) {
   const router = useRouter();
   const [busy, setBusy] = useState(false);
   const [err, setErr] = useState<string | null>(null);
   const [amount, setAmount] = useState(p.soldAmount?.toString() ?? '');
   const [copied, setCopied] = useState(false);
+  const [ibanCopied, setIbanCopied] = useState(false);
+  const fmt = (n: number) => new Intl.NumberFormat('en-IE', { style: 'currency', currency: p.currency }).format(n);
+  async function sellIt() {
+    try { await navigator.clipboard.writeText(p.listingText); } catch {}
+    setCopied(true);
+    if (p.market.sellUrl) window.open(p.market.sellUrl, '_blank', 'noopener');
+    if (p.status === 'new') patch({ status: 'listed' });
+  }
 
   async function patch(body: Record<string, unknown>) {
     setBusy(true); setErr(null);
@@ -26,6 +37,36 @@ export function ItemActions(p: { id: string; status: string; verdict: string | n
   return (
     <section style={{ display: 'grid', gap: 14 }}>
       <h2 className="label" style={{ margin: 0 }}>What actually happened · status: {p.status}</h2>
+      {p.listingText && p.status !== 'sold' && (
+        <div className="actions-row">
+          <button className="btn lime" type="button" onClick={sellIt}>Sell it on {p.market.label} →</button>
+          {copied && <span className="saved">Listing copied. Paste it in.</span>}
+        </div>
+      )}
+      {p.status === 'sold' && p.payout && p.soldAmount != null && (
+        <div className="callout" style={{ background: p.proceedsSent ? '#fff' : '#D4FF3F' }}>
+          <strong>{p.proceedsSent ? 'Sent. Good human.' : `Send ${fmt(p.soldAmount)} to ${p.payout.name}`}</strong>
+          {!p.proceedsSent && (
+            <div style={{ display: 'grid', gap: 10, marginTop: 8 }}>
+              {p.payout.iban && (
+                <div className="actions-row">
+                  <span className="mono" style={{ fontSize: 14 }}>IBAN {p.payout.iban}{p.payout.bic ? ` · BIC ${p.payout.bic}` : ''}</span>
+                  <button className="btn sm ghost" type="button" onClick={async () => { await navigator.clipboard.writeText(p.payout!.iban!.replace(/\s/g, '')); setIbanCopied(true); }}>{ibanCopied ? 'Copied' : 'Copy IBAN'}</button>
+                </div>
+              )}
+              <div className="actions-row">
+                {p.payout.revolut && <a className="btn sm" href={p.payout.revolut} target="_blank" rel="noreferrer">Pay with Revolut</a>}
+                {p.payout.wise && <a className="btn sm" href={p.payout.wise} target="_blank" rel="noreferrer">Pay with Wise</a>}
+                {p.payout.url && <a className="btn sm ghost" href={p.payout.url} target="_blank" rel="noreferrer">Their donate page</a>}
+              </div>
+              {p.payout.note && <span className="muted" style={{ fontSize: 14 }}>{p.payout.note}</span>}
+            </div>
+          )}
+          <div className="actions-row" style={{ marginTop: 10 }}>
+            <button className="btn sm ghost" type="button" disabled={busy} onClick={() => patch({ proceedsSent: !p.proceedsSent })}>{p.proceedsSent ? 'Undo' : "I've sent it"}</button>
+          </div>
+        </div>
+      )}
       <div className="actions-row">
         {p.listingText && <button className="btn sm ghost" type="button" onClick={async () => { await navigator.clipboard.writeText(p.listingText); setCopied(true); setTimeout(() => setCopied(false), 1500); }}>{copied ? 'Copied' : 'Copy listing'}</button>}
         <button className="btn sm ghost" disabled={busy} onClick={() => patch({ status: 'kept' })}>I kept it</button>

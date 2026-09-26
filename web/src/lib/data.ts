@@ -3,13 +3,17 @@ import { sql } from './db';
 import { decryptString, encryptString } from './crypto';
 import type { RepoSummary } from './github';
 
-export const DEFAULT_BENEFICIARY = { name: 'Gozo SPCA', url: 'https://gozo-spca.org/' } as const;
+export const DEFAULT_BENEFICIARY = { get name() { return process.env.DEFAULT_BENEFICIARY_NAME || 'Gozo SPCA'; }, get url() { return process.env.DEFAULT_BENEFICIARY_URL || 'https://gozo-spca.org/'; } };
 
 export type Profile = {
   displayName?: string;
   homes?: string;
   household?: string;
   githubUsername?: string;
+  /** Optional read-only GitHub token (fine-grained, Metadata: read) so private repo names count too. */
+  githubToken?: string;
+  /** Optional: only use repos whose names contain one of these comma-separated words. */
+  repoFilter?: string;
   repos?: RepoSummary[];
   reposFetchedAt?: string;
   projects?: string;
@@ -22,12 +26,24 @@ export type Profile = {
   anythingElse?: string;
 };
 
-export const PROFILE_TEXT_FIELDS = ['displayName', 'homes', 'household', 'projects', 'skills', 'hobbies', 'interests', 'habits', 'goals', 'gear', 'anythingElse'] as const;
+export const PROFILE_TEXT_FIELDS = ['repoFilter', 'displayName', 'homes', 'household', 'projects', 'skills', 'hobbies', 'interests', 'habits', 'goals', 'gear', 'anythingElse'] as const;
 
 export async function getProfile(userId: string): Promise<{ profile: Profile; sensitiveConsentAt: Date | null; updatedAt: Date | null }> {
   const [row] = await sql`select data_enc, sensitive_consent_at, updated_at from profiles where user_id = ${userId}`;
   if (!row) return { profile: {}, sensitiveConsentAt: null, updatedAt: null };
   return { profile: JSON.parse(decryptString(row.data_enc)), sensitiveConsentAt: row.sensitive_consent_at, updatedAt: row.updated_at };
+}
+
+/** A profile safe to send to the browser: the GitHub token never leaves the server. */
+export function publicProfile(p: Profile) {
+  const { githubToken, ...rest } = p;
+  return { ...rest, hasGithubToken: !!githubToken };
+}
+
+export function filterRepos(p: Profile) {
+  const words = (p.repoFilter || '').split(',').map(w => w.trim().toLowerCase()).filter(Boolean);
+  const repos = p.repos ?? [];
+  return words.length ? repos.filter(r => words.some(w => r.name.toLowerCase().includes(w))) : repos;
 }
 
 export async function saveProfile(userId: string, profile: Profile, sensitiveConsent: boolean) {
@@ -43,6 +59,11 @@ export type Settings = {
   beneficiaryKind: 'default' | 'charity' | 'self';
   beneficiaryName: string | null;
   beneficiaryUrl: string | null;
+  beneficiaryIban: string | null;
+  beneficiaryBic: string | null;
+  beneficiaryRevolut: string | null;
+  beneficiaryWise: string | null;
+  marketplace: string;
   currency: string;
   aiProvider: 'server' | 'anthropic' | 'openai' | 'google' | 'openai-compatible';
   aiModel: string | null;
@@ -52,11 +73,16 @@ export type Settings = {
 
 export async function getSettings(userId: string): Promise<Settings & { aiKey: string | null }> {
   const [r] = await sql`select * from settings where user_id = ${userId}`;
-  if (!r) return { beneficiaryKind: 'default', beneficiaryName: null, beneficiaryUrl: null, currency: 'EUR', aiProvider: 'server', aiModel: null, aiBaseUrl: null, hasAiKey: false, aiKey: null };
+  if (!r) return { beneficiaryKind: 'default', beneficiaryName: null, beneficiaryUrl: null, beneficiaryIban: null, beneficiaryBic: null, beneficiaryRevolut: null, beneficiaryWise: null, marketplace: 'ebay.co.uk', currency: 'EUR', aiProvider: 'server', aiModel: null, aiBaseUrl: null, hasAiKey: false, aiKey: null };
   return {
     beneficiaryKind: r.beneficiary_kind,
     beneficiaryName: r.beneficiary_name,
     beneficiaryUrl: r.beneficiary_url,
+    beneficiaryIban: r.beneficiary_iban,
+    beneficiaryBic: r.beneficiary_bic,
+    beneficiaryRevolut: r.beneficiary_revolut,
+    beneficiaryWise: r.beneficiary_wise,
+    marketplace: r.marketplace,
     currency: r.currency,
     aiProvider: r.ai_provider,
     aiModel: r.ai_model,
@@ -76,7 +102,7 @@ export type ItemRow = {
   id: string; name: string | null; category: string | null; era: string | null; confidence: number | null;
   value_low: string | null; value_high: string | null; currency: string; verdict: 'keep' | 'build' | 'let_go' | 'retake' | null;
   headline: string | null; reason: string | null; result: unknown; model: string | null; status: string;
-  sold_amount: string | null; beneficiary_label: string | null; created_at: Date; photo_path: string | null; photo_mime: string | null;
+  sold_amount: string | null; beneficiary_label: string | null; proceeds_sent_at: Date | null; created_at: Date; photo_path: string | null; photo_mime: string | null;
 };
 
 export async function listItems(userId: string, limit = 200): Promise<ItemRow[]> {
