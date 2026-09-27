@@ -28,6 +28,13 @@
 - [ ] Photo storage on Cloudflare R2 / S3 (driver swap in `web/src/lib/storage.ts`)
 - [ ] Offline queue: shoot now, judge when back online
 
+## From the handover notes ([docs/WTFThis_Handover_Doc.md](docs/WTFThis_Handover_Doc.md))
+- [ ] Visual eval suite: real photos with expected answers (`web/tests/visual_eval/`), run against the live model before every prompt change. Start with the UGREEN coupler label and the mixed bulb-and-Arlo pile
+- [ ] Mixed piles: one photo, several things. Return a list of items, each with its own verdict, instead of forcing one answer for the whole heap
+- [ ] "What charges this?": record the power port (USB-C, Micro-USB, barrel, proprietary) and the likely charger, and match it against cables you already own
+- [ ] Where it lives: optional storage location per item (bin, drawer, house) so the ledger doubles as a findable inventory
+- [ ] Don't trust the caption: when the user's note says "smart bulbs" but the photo shows something else, go with the photo and say so
+
 ## Native apps
 - [x] Android app: signed APK, camera opens on tap, released as v0.1.0 (`mobile/android`)
 - [x] iPhone app: Xcode project builds and runs (`mobile/ios`); TestFlight as soon as the Apple Developer membership is active
