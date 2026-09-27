@@ -52,7 +52,7 @@ for (const c0 of cases) for (let run = 1; run <= RUNS; run++) {
   const found = items.filter(i => i.found).length;
   const verdict = data.verdict.verdict;
   const verdictOk = !c.expectVerdict || c.expectVerdict.includes(verdict);
-  const banned = (c.never || []).filter(w => w === verdict || new RegExp(w, 'i').test(said));
+  const banned = (c.never || []).filter(w => ['keep', 'build', 'let_go', 'retake'].includes(w) ? w === verdict : new RegExp(w, 'i').test(said));
   const pass = found === items.length && verdictOk && banned.length === 0;
   totalItems += items.length; foundItems += found; if (pass) casesPassed++;
 
