@@ -38,6 +38,9 @@ a { color: inherit; text-underline-offset: 3px; }
   main.app-main { padding-bottom: 96px; }
 }
 main.app-main { padding-block: 28px 64px; }
+/* Respect the notch and home indicator in the native iOS/Android shells and installed web app. */
+body { padding-top: env(safe-area-inset-top); padding-left: env(safe-area-inset-left); padding-right: env(safe-area-inset-right); }
+.app-header { top: env(safe-area-inset-top); }
 
 .page-title { font-size: clamp(44px, 8vw, 88px); margin-bottom: 8px; }
 .section { margin-top: 40px; }

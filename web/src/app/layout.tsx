@@ -24,7 +24,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     </html>
   );
   return clerkOn ? (
-    <ClerkProvider appearance={{ variables: { colorPrimary: '#0A0A0B', borderRadius: '0px', fontFamily: 'Geist, system-ui, sans-serif' } }} signInUrl="/sign-in" signUpUrl="/sign-up" afterSignOutUrl="/">
+    <ClerkProvider appearance={{ variables: { colorPrimary: '#0A0A0B', borderRadius: '0px', fontFamily: 'Geist, system-ui, sans-serif' } }}
+      localization={{ signIn: { start: { title: 'Sign in to WTF This', subtitle: 'Welcome back. Your drawers missed you.' } }, signUp: { start: { title: 'Join WTF This', subtitle: 'One photo in, one verdict out.' } } }} signInUrl="/sign-in" signUpUrl="/sign-up" afterSignOutUrl="/">
       {html}
     </ClerkProvider>
   ) : html;
