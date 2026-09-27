@@ -1,62 +1,50 @@
-# Handover Document: WTFThis.com Multimodal AI Engine Prototyping
+# Hard photos: notes from an early review
 
-## 1. Project Context & Objectives
-**WTFThis.com** (`WTFThis`) is a developer-centric utility tool designed to map, categorize, and diagnose physical objects (specifically household electronics, small adapters, legacy hardware, and "forgotten tech clutter"). The core engineering problem is deploying robust computer vision pipeline logic via local flagship desktop models (**Astra 6 / Opus 5.5**) to build deterministic device matching matrices.
+Two real photos from Mattie's house, what's actually in them, and what they teach the app.
+Both are test fixtures in [`web/tests/visual_eval/`](../web/tests/visual_eval/), where the expected answers live in `cases.json`.
 
-The long-term objective of this inventory workflow is parsing down a legacy inventory cache to decide between utility deployment, archiving, or liquidation for charity proceeds.
+## 1. The sealed bag (`ugreen-coupler-label.jpg`)
 
----
+A white poly bag. Nothing inside is visible; only an Amazon thermal label.
 
-## 2. Real-World Training & Edge-Case Datasets
-The physical device pile discussed during our sessions serves as an excellent benchmark dataset for extreme visual variation, overlapping device signatures, and misleading structural shapes.
+- **What it is:** UGREEN RJ45 female-to-female Ethernet coupler, 5-pack. Label text: `20311P5`, EAN `6957303825417`, Amazon FNSKU `X000B56PAL` (the barcode).
+- **Lesson:** when there's a label, the label is the answer. Read it, trust it, and don't guess from shape. The barcode reader in the browser already decodes the FNSKU and hands it to the model.
+- **Lesson:** "Let it go" isn't automatic. A household full of projectors and Raspberry Pis runs plenty of Ethernet. Whether couplers are useful depends on the profile, not on a rule like "wireless homes don't need these".
 
-### Dataset Example 1: Pure Component Verification via Barcode/Label
-*   **Media Reference:** `image_wcj9We.png` (Barcode/Packaging label verification)
-*   **Visual State:** Transparent/poly-bagged item completely enclosed with white thermal labels. No bare components exposed.
-*   **Target Entities:** 
-    *   `UGREEN` RJ45 Female-to-Female Ethernet Coupler 5-Pack.
-    *   SKU/Identifiers: `X000B56PAL`, `20311P5`, UPC/EAN `6957303825417`.
-*   **LLM Pipeline Logic Rules:**
-    1.  **Prioritize OCR Stack:** If explicit product barcodes or brand strings are visible, bypass standard component shape classifiers. Treat label text strings as the ground truth.
-    2.  **Contextual Storage Mapping:** Map the component category to its micro-storage container (e.g., Categorized under: `"small data adapters" / Tupperware storage bin`).
+## 2. The pile (`bulb-pile.jpg`)
 
-### Dataset Example 2: Ambiguous Geometry & Misleading Component Signatures
-*   **Media Reference:** `image_kOnYoC.png` (Overlapping electronics heap)
-*   **Visual State:** Dense cluster combining classic amber filament bulbs, white globe LEDs, small-base candle bulbs, and two loose white oblong plastic pods.
-*   **The "False Positive" Trap:** The user structurally labeled the entire pile as a "shit ton of smart bulbs" alongside missing "Eufy cameras." 
-*   **Target Entities Detected:**
-    *   `Aigostar` Filament Bulb G80 E27 Amber (4-Pack Box).
-    *   `ExtraStar` 6W E14 LED Candle Bulbs (6-Pack Box).
-    *   `Arlo` Wireless Smart Security Lights (Model: `AL1101`) — *Identified via the subtle side-stamped brand logo and flat diffuser window panel.*
-*   **LLM Pipeline Logic Rules:**
-    1.  **Differentiate Co-located Sub-components:** In a combined heap, do not assume all items share the container's primary class (e.g., do not classify the Arlo lights as smart bulbs or Eufy cameras despite the user's textual pre-bias).
-    2.  **Physical Interface Extraction:** Read the port shape under weather-proofing flaps. For instance, the `Arlo AL1101` exposes a Micro-USB interface rather than a Type-C socket.
+The owner called it "a shit ton of smart bulbs". About half of it is.
 
----
+| What | How you can tell |
+| --- | --- |
+| Aigostar G80 E27 amber filament bulbs, 4-pack | Box: 600 lm, 6 W, 2200 K |
+| ExtraStar 6 W E14 candle bulbs, **pack of 3** | Box: 480 lm, 3000 K, "PACK X3" (easy to miscount as 6) |
+| Smart Wi-Fi dimmable E14 candle bulb, RGB + warm white | Small box: C37, 4.9 W, 380 lm, works with Google Assistant and Alexa |
+| Govee smart bulbs, E27, many | "Govee" printed on the bulb necks |
+| Arlo security gear, two white units | "arlo" logo on the housings (exact models not confirmed) |
+| Philips Hue / Signify 24 V LED lightstrip | Cable tag: model 929002…, 24 V, 830 mA, 20 W, 1600 lm, 4000 K, Signify, Eindhoven NL |
+| Loose vintage filament bulbs, clear and amber | Visible filaments |
+| A "Smart Wi-Fi LED Bulb" user manual | Paper booklet |
 
-## 3. The Power & Charging Heuristic Matrix
-Flagship models require a standardized logic tree to solve the common user problem: *"What cable charges this unlabeled gadget?"* Below is the system-wide matrix ruleset for deployment.
+The white soundbar at the top edge is furniture, not part of the pile.
 
-| Identified Sub-Brand | Visual Port Signature | Required Power Delivery Target | Resolution Strategy |
-| :--- | :--- | :--- | :--- |
-| **Arlo Security Light** | Weather-proof rubber seal flap covering flat asymmetrical trapezoid pinout | 5V / 1A - 2A Micro-USB | Map directly to generic legacy smartphone cable lines. |
-| **Eufy Camera (Legacy Gen)** | Bottom/Rear heavy rubberized flap covering narrow legacy trapezoid interface | 5V / 2A Micro-USB | Support standard USB charging blocks or direct link to Eufy HomeBase USB auxiliary ports. |
-| **Eufy Camera (Current Gen)** | Centered oval round interface socket | 5V / 2A or 9V / 2A USB Type-C | Map directly to universal Type-C Power Delivery lines. |
+- **Lesson:** a pile is many things. One verdict for the whole heap is wrong by design. The app needs to return a list, each item with its own verdict.
+- **Lesson:** trust the photo over the caption. If the owner says "smart bulbs" or "Eufy cameras" and the housing says Arlo, say Arlo, and say it politely.
+- **Lesson:** small print wins. The lightstrip is only identifiable from a tag the size of a stamp. Worth zooming, or asking for a close-up.
 
----
+## 3. "What charges this?"
 
-## 4. Next-Gen Repository Deployment Roadmap
-To pivot from a browser-based context to definitive repo-level modifications using Astra 6 or Opus 5.5, implement the following local tasks:
+A real and common question. Rather than a hard-coded brand-to-port table (it goes stale with every new model), each item should record:
 
-1.  **Establish Visual Evaluation Tests (`/tests/visual_eval`):** Commit the two provided image states as gold-standard benchmark fixtures for your model's classification validation.
-2.  **Structure JSON Schema Output:** Force the local model to return exact structural objects rather than prose paragraphs:
-    ```json
-    {
-      "detected_object": "Arlo Smart Security Light",
-      "model_number": "AL1101",
-      "power_interface": "Micro-USB",
-      "storage_destination": "Electronics Cache",
-      "charity_liquidation_value": "Medium"
-    }
-    ```
-3.  **Integrate Inventory Filtering:** Write a routing layer that auto-flags items without modern practical use cases (e.g., standard Ethernet couplers when the household is completely wireless) to be bucketed into the **Charity Donation Stream**.
+- the power port it has (USB-C, Micro-USB, barrel, mains, proprietary magnetic, battery-only),
+- the likely charger or supply (for example "5 V USB" or "24 V Hue power supply"),
+
+so the ledger can answer "do I own the thing that powers this?", and the "don't sell the only charger" rule can check real cables instead of guessing. Port details read from a photo must be treated as a guess unless the label or manual says so.
+
+## 4. Where it lives
+
+An optional storage location per item (the bin, drawer or house), so "Your stuff" doubles as an inventory you can search.
+
+## What changed in the app because of these notes
+
+See the "From the handover notes" section of [ROADMAP.md](../ROADMAP.md).
