@@ -10,6 +10,8 @@ const config: CapacitorConfig = {
   webDir: 'www',
   server: {
     url: `${appUrl}/app`,
+    // Plain http only for local testing (e.g. the Android emulator reaching the host at 10.0.2.2).
+    cleartext: appUrl.startsWith('http://'),
     // Only these hosts load inside the app; everything else (eBay, Revolut, GitHub…) opens in the system browser.
     allowNavigation: [new URL(appUrl).hostname, '*.clerk.accounts.dev', 'clerk.wtfthis.com'],
   },
