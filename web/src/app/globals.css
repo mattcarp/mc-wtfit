@@ -33,7 +33,7 @@ a { color: inherit; text-underline-offset: 3px; }
 .app-nav a[aria-current="page"] { border-color: var(--ink); background: var(--white); }
 .app-nav a:hover { background: var(--white); }
 @media (max-width: 640px) {
-  .app-nav { position: fixed; bottom: 0; left: 0; right: 0; background: var(--paper); border-top: 1.5px solid var(--ink); justify-content: space-around; padding: 6px 6px calc(6px + env(safe-area-inset-bottom)); z-index: 30; }
+  .app-nav { position: fixed; bottom: 0; left: 0; right: 0; background: var(--paper); border-top: 1.5px solid var(--ink); justify-content: space-around; padding: 6px 6px max(16px, calc(6px + env(safe-area-inset-bottom))); z-index: 30; }
   .app-nav a { flex: 1; text-align: center; font-size: 13px; }
   main.app-main { padding-bottom: 96px; }
 }
