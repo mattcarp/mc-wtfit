@@ -1,0 +1,23 @@
+{
+  "name": "wtfthis-mobile",
+  "version": "0.1.0",
+  "private": true,
+  "license": "MIT",
+  "description": "Native iOS and Android shells for What The Fuck This? The app itself is served by the web backend.",
+  "scripts": {
+    "sync": "cap sync",
+    "ios": "cap open ios",
+    "android": "cap open android"
+  },
+  "dependencies": {
+    "@capacitor/android": "^7.6.9",
+    "@capacitor/cli": "^7.6.9",
+    "@capacitor/core": "^7.6.9",
+    "@capacitor/ios": "^7.6.9",
+    "@capacitor/splash-screen": "^7.0.5",
+    "@capacitor/status-bar": "^7.0.6"
+  },
+  "devDependencies": {
+    "typescript": "^5.9.3"
+  }
+}
