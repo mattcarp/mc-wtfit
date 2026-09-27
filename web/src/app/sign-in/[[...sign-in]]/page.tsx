@@ -1,8 +1,8 @@
-import { SignIn } from '@clerk/nextjs';
+import { AuthWidget } from '@/components/AuthWidget';
 import Link from 'next/link';
 import { authMode } from '@/lib/auth';
 export const dynamic = 'force-dynamic';
 export default function Page() {
   if (authMode() !== 'clerk') return <main className="wrap app-main"><p>Sign-in is not configured. <Link href="/app">Go to the app</Link></p></main>;
-  return <main className="wrap app-main" style={{ display: 'grid', placeItems: 'center', gap: 24 }}><Link className="wordmark" href="/">WTF THIS</Link><SignIn forceRedirectUrl="/app" /></main>;
+  return <main className="wrap app-main" style={{ display: 'grid', placeItems: 'center', gap: 24 }}><Link className="wordmark" href="/">WTF THIS</Link><AuthWidget mode="sign-in" /></main>;
 }

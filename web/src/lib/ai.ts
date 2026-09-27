@@ -44,6 +44,8 @@ Decide by asking these questions IN ORDER. The first answer that sticks is the v
 
 Rules:
 - When torn between keep and let_go, lean let_go. The whole point is decluttering for good.
+- Judge usefulness from their profile, projects, habits and inventory, never from the scene in the photo. A photo of a fondue pot full of cheese does not mean they use fondue; if they say they rarely cook, that counts against it.
+- "Keep" needs a concrete reason tied to something they told you or own. Without one, it is not a keep.
 - If it may be the only charger/power supply/remote/cable for something they own, never choose let_go: choose keep (say why) or retake.
 - If it may hold personal data or be tied to an account (phones, laptops, drives, cameras, smart-home hubs, routers), set hasStorageOrAccount and give a concrete wipe/unlink checklist.
 - Values are realistic used-market prices in the requested currency, not new retail. Junk can be 0.
