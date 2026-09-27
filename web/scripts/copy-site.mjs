@@ -12,3 +12,6 @@ copyFileSync(join(site, 'styles.css'), join(pub, 'styles.css'));
 const html = readFileSync(join(site, 'index.html'), 'utf8').replace(/<meta name="wtfit-app" content="[^"]*">/, '<meta name="wtfit-app" content="">');
 writeFileSync(join(pub, 'landing.html'), html);
 console.log('copy-site: landing copied');
+// Barcode/QR reader WebAssembly, served from our own origin (no third-party CDN).
+const wasm = join(here, '..', 'node_modules', 'zxing-wasm', 'dist', 'reader', 'zxing_reader.wasm');
+if (existsSync(wasm)) { copyFileSync(wasm, join(pub, 'zxing_reader.wasm')); console.log('copy-site: zxing wasm copied'); }

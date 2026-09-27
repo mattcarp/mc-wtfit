@@ -54,7 +54,11 @@ body { padding-top: env(safe-area-inset-top); padding-left: env(safe-area-inset-
 @media (max-width: 860px) { .capture { grid-template-columns: minmax(0, 1fr); } }
 .shutter { position: relative; width: 100%; aspect-ratio: 4 / 3; display: grid; place-items: center; border: 1.5px solid var(--ink); background-color: var(--white); background-image: radial-gradient(var(--rule) 1px, transparent 1px); background-size: 16px 16px; cursor: pointer; overflow: hidden; }
 .shutter:hover .shutter-btn { background: var(--lime); color: var(--ink); }
-.shutter img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.shutter .shots { position: absolute; inset: 0; display: grid; gap: 2px; background: var(--ink); }
+.shutter .shots.n2 { grid-template-columns: 1fr 1fr; }
+.shutter .shots.n3 { grid-template-columns: 1fr 1fr 1fr; }
+.shutter .shots img { width: 100%; height: 100%; object-fit: cover; display: block; min-width: 0; }
+.shutter.dragging { outline: 3px dashed var(--ink); outline-offset: -10px; background-color: #FBFFE9; }
 .shutter-btn { position: relative; display: flex; flex-direction: column; align-items: center; gap: 10px; padding: 18px 26px; background: var(--ink); color: var(--white); font: 700 15px var(--sans); }
 .shutter-btn .display { font-size: 34px; }
 .crosshair { position: absolute; width: 20px; height: 20px; border: 0 solid var(--ink); z-index: 2; }

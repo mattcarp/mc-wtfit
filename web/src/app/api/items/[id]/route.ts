@@ -38,6 +38,7 @@ export async function DELETE(_req: Request, ctx: Ctx) {
     const item = await getItem(user.id, id);
     if (!item) return fail('Not found', 404);
     if (item.photo_path) await deletePhoto(item.photo_path);
+    for (const p of item.extra_photos ?? []) await deletePhoto(p);
     await sql`delete from items where id = ${id} and user_id = ${user.id}`;
     return json({ ok: true });
   });

@@ -35,6 +35,14 @@ export default async function ItemPage({ params }: { params: Promise<{ id: strin
         <div className="item-grid">
           <div>
             {item.photo_path && <div className="photo-frame"><img src={`/api/photos/${item.id}`} alt={item.name || 'Photo'} /></div>}
+            {!!item.extra_photos?.length && (
+              <div style={{ display: 'grid', gridTemplateColumns: `repeat(${item.extra_photos.length}, minmax(0, 1fr))`, gap: 8, marginTop: 8 }}>
+                {item.extra_photos.map((_, n) => <div key={n} className="photo-frame"><img src={`/api/photos/${item.id}?i=${n + 1}`} alt={`Angle ${n + 2}`} /></div>)}
+              </div>
+            )}
+            {!!item.codes?.facts?.length && (
+              <div className="callout"><strong>Read from the codes</strong><ul>{item.codes.facts.map((f, n) => <li key={n}>{f}</li>)}</ul></div>
+            )}
             <p className="label" style={{ marginTop: 10 }}>Judged by {item.model} · {new Date(item.created_at).toLocaleString('en-GB')}</p>
           </div>
           <div style={{ display: 'grid', gap: 24 }}>

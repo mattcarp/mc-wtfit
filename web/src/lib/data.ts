@@ -102,7 +102,7 @@ export type ItemRow = {
   id: string; name: string | null; category: string | null; era: string | null; confidence: number | null;
   value_low: string | null; value_high: string | null; currency: string; verdict: 'keep' | 'build' | 'let_go' | 'retake' | null;
   headline: string | null; reason: string | null; result: unknown; model: string | null; status: string;
-  sold_amount: string | null; beneficiary_label: string | null; proceeds_sent_at: Date | null; created_at: Date; photo_path: string | null; photo_mime: string | null;
+  sold_amount: string | null; beneficiary_label: string | null; proceeds_sent_at: Date | null; created_at: Date; photo_path: string | null; photo_mime: string | null; extra_photos: string[] | null; codes: { facts?: string[] } | null;
 };
 
 export async function listItems(userId: string, limit = 200): Promise<ItemRow[]> {

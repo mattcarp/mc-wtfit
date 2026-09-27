@@ -4,6 +4,7 @@ import { analyzePhoto, buildContext, chooseModel, NoModelError } from '@/lib/ai'
 import { beneficiaryLabel, getProfile, getSettings, listItems } from '@/lib/data';
 import { deletePhoto, savePhoto } from '@/lib/storage';
 import { limited } from '@/lib/ratelimit';
+import { describeCodes } from '@/lib/matter';
 import { fail, json, withUser } from '../_util';
 
 export const dynamic = 'force-dynamic';
@@ -15,13 +16,20 @@ const OK_TYPES = new Set(['image/jpeg', 'image/png', 'image/webp', 'image/gif', 
 export async function POST(req: Request) {
   return withUser(async user => {
     if (limited(`an:${user.id}`, 20, 10 * 60 * 1000)) return fail('Slow down: that is a lot of stuff. Try again in a few minutes.', 429);
-    let file: File | null = null;
-    try { file = (await req.formData()).get('photo') as File | null; } catch { return fail('Send the photo as multipart form data, field "photo".'); }
-    if (!file || typeof file === 'string') return fail('No photo attached.');
-    if (file.size > MAX_BYTES) return fail('That photo is over 10 MB. The app shrinks photos for you; try again from the camera screen.');
-    const mime = file.type || 'image/jpeg';
-    if (!OK_TYPES.has(mime)) return fail(`Unsupported image type ${mime}.`);
-    const image = Buffer.from(await file.arrayBuffer());
+    let form: FormData;
+    try { form = await req.formData(); } catch { return fail('Send the photo as multipart form data, field "photo".'); }
+    const files = form.getAll('photo').filter((f): f is File => typeof f !== 'string').slice(0, 3);
+    if (!files.length) return fail('No photo attached.');
+    const images: { data: Buffer; mime: string }[] = [];
+    for (const file of files) {
+      if (file.size > MAX_BYTES) return fail('One of those photos is over 10 MB. The app shrinks photos for you; try again from the scan screen.');
+      const mime = file.type || 'image/jpeg';
+      if (!OK_TYPES.has(mime)) return fail(`Unsupported image type ${mime}.`);
+      images.push({ data: Buffer.from(await file.arrayBuffer()), mime });
+    }
+    let codes: { format: string; text: string }[] = [];
+    try { const raw = form.get('codes'); if (typeof raw === 'string') codes = (JSON.parse(raw) as { format: string; text: string }[]).filter(c => c && typeof c.text === 'string').slice(0, 6); } catch {}
+    const codeFacts = await describeCodes(codes);
 
     const settings = await getSettings(user.id);
     let choice;
@@ -44,19 +52,23 @@ export async function POST(req: Request) {
     const context = buildContext({ profile, inventory, beneficiary: beneficiary === 'you' ? 'the owner themselves' : beneficiary, currency: settings.currency });
 
     const id = randomUUID();
-    const photoPath = await savePhoto(user.id, id, image);
+    const photoPath = await savePhoto(user.id, id, images[0].data);
+    const extra: string[] = [];
+    for (let n = 1; n < images.length; n++) extra.push(await savePhoto(user.id, `${id}-${n}`, images[n].data));
     try {
-      const v = await analyzePhoto({ image, mime, context, choice });
+      const v = await analyzePhoto({ images, context, codeFacts, choice });
       const [item] = await sql`insert into items ${sql({
-        id, user_id: user.id, photo_path: photoPath, photo_mime: mime,
+        id, user_id: user.id, photo_path: photoPath, photo_mime: images[0].mime, extra_photos: extra,
+        codes: codes.length ? sql.json({ codes: codes.map(c => ({ format: c.format, text: /^MT:/i.test(c.text) ? 'MT:…' : c.text.slice(0, 200) })), facts: codeFacts } as never) : null,
         name: v.name, category: v.category, era: v.era, confidence: v.confidence,
         value_low: v.valueLow, value_high: v.valueHigh, currency: settings.currency,
         verdict: v.verdict, headline: v.headline, reason: v.reason,
         result: sql.json(v as never), model: choice.label, beneficiary_label: beneficiary,
       })} returning id, verdict`;
-      return json({ id: item.id, verdict: v, model: choice.label, beneficiary });
+      return json({ id: item.id, verdict: v, model: choice.label, beneficiary, codeFacts, photos: images.length });
     } catch (e) {
       await deletePhoto(photoPath);
+      for (const p of extra) await deletePhoto(p);
       if (choice.server) await sql`update users set server_ai_count = greatest(server_ai_count - 1, 0) where id = ${user.id}`;
       if (e instanceof NoModelError) return fail(e.message, 400);
       console.error('[analyze]', e);

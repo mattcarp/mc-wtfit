@@ -5,3 +5,4 @@ data
 public/landing.html
 public/styles.css
 *.tsbuildinfo
+public/zxing_reader.wasm

@@ -9,5 +9,5 @@ export default function middleware(req: NextRequest, ev: NextFetchEvent) {
 }
 
 export const config = {
-  matcher: ['/((?!_next|landing.html|styles.css|icon|apple-icon|manifest.webmanifest|.*\\.(?:css|js|png|jpg|svg|ico|webmanifest)$).*)'],
+  matcher: ['/((?!_next|landing.html|styles.css|icon|apple-icon|manifest.webmanifest|.*\\.(?:css|js|png|jpg|svg|ico|webmanifest|wasm)$).*)'],
 };
