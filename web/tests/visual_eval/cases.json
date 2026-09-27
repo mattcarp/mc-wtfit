@@ -1,27 +1,85 @@
 [
   {
     "id": "ugreen-coupler-label",
-    "photos": ["fixtures/ugreen-coupler-label.jpg"],
+    "photos": [
+      "fixtures/ugreen-coupler-label.jpg"
+    ],
     "note": "Sealed bag, only a thermal label visible. The label is the whole answer.",
     "items": [
-      { "name": "UGREEN RJ45 female-to-female coupler, 5-pack", "match": ["ugreen", "rj45|ethernet", "coupler"] }
+      {
+        "name": "UGREEN RJ45 female-to-female coupler, 5-pack",
+        "match": [
+          "ugreen",
+          "rj45|ethernet",
+          "coupler"
+        ]
+      }
     ],
-    "expectVerdict": ["let_go", "keep", "build"],
-    "never": ["retake"]
+    "expectVerdict": [
+      "let_go",
+      "keep",
+      "build"
+    ],
+    "never": [
+      "retake"
+    ]
   },
   {
     "id": "bulb-pile",
-    "photos": ["fixtures/bulb-pile.jpg"],
-    "note": "A heap, not one thing. Owner called it 'a shit ton of smart bulbs'; about half of it is something else.",
-    "items": [
-      { "name": "Aigostar G80 E27 amber filament bulbs, 4-pack (boxed)", "match": ["aigostar"] },
-      { "name": "ExtraStar 6W E14 candle bulbs, 480 lm, 3000K, pack of 3 (boxed)", "match": ["extra ?star", "e14|candle"] },
-      { "name": "Smart Wi-Fi dimmable E14 candle bulb, RGB + warm white (boxed)", "match": ["wi-?fi|smart", "e14|c37|candle"] },
-      { "name": "Govee smart bulbs, E27 (loose, many)", "match": ["govee"] },
-      { "name": "Arlo security gear (two white Arlo units)", "match": ["arlo"] },
-      { "name": "Philips Hue / Signify 24V LED lightstrip", "match": ["signify|hue|light ?strip|led strip"] },
-      { "name": "Loose vintage filament bulbs (clear and amber)", "match": ["filament|edison|vintage"] }
+    "photos": [
+      "fixtures/bulb-pile.jpg"
     ],
-    "never": ["eufy"]
+    "note": "A heap, not one thing. Owner called it 'a shit ton of smart bulbs'; about half of it is something else. Arlo makes cameras and security lights, not bulbs: an 'Arlo bulb' means the model smeared a logo across the heap.",
+    "items": [
+      {
+        "name": "Aigostar G80 E27 amber filament bulbs, 4-pack (boxed)",
+        "match": [
+          "aigostar"
+        ]
+      },
+      {
+        "name": "ExtraStar 6W E14 candle bulbs, 480 lm, 3000K, pack of 3 (boxed)",
+        "match": [
+          "extra ?star",
+          "e14|candle"
+        ]
+      },
+      {
+        "name": "Smart Wi-Fi dimmable E14 candle bulb, RGB + warm white (boxed)",
+        "match": [
+          "wi-?fi|smart",
+          "e14|c37|candle"
+        ]
+      },
+      {
+        "name": "Govee smart bulbs, E27 (loose, many)",
+        "match": [
+          "govee"
+        ]
+      },
+      {
+        "name": "Arlo security gear (two white Arlo units)",
+        "match": [
+          "arlo"
+        ]
+      },
+      {
+        "name": "Philips Hue / Signify 24V LED lightstrip",
+        "match": [
+          "signify|hue|light ?strip|led strip"
+        ]
+      },
+      {
+        "name": "Loose vintage filament bulbs (clear and amber)",
+        "match": [
+          "filament|edison|vintage"
+        ]
+      }
+    ],
+    "never": [
+      "eufy",
+      "arlo[^\"]{0,60}bulb",
+      "arlo[^\"]{0,40}dimmable"
+    ]
   }
 ]

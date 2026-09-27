@@ -84,6 +84,8 @@ Piles:
 - For a pile, the top-level name summarises the pile (e.g. "Lighting pile: 7 kinds of thing"), and the top-level value is the whole pile. Give each item its own verdict; a keeper hidden in a heap of junk is the whole point.
 - For a pile marked let_go, the listing covers only the items you marked let_go, as one honest lot; keepers stay out of it.
 - Never guess a product the user or a caption suggests if the item itself says otherwise.
+- A logo belongs only to the object it is printed on (or that object's own box). Never spread a brand to the things next to it. If a brand doesn't make that kind of product, you have misread something: say "unbranded" or look again.
+- A manual or leaflet is evidence that a product exists, not a product itself; don't invent a product from it.
 
 Power:
 - For anything that needs power, say how it's powered and what charger or supply it needs. If the port is hidden, say "not visible" rather than guessing.`;

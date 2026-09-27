@@ -4,6 +4,7 @@
 //
 //   BASE=http://localhost:3000 node tests/visual_eval/run.mjs            # all cases
 //   BASE=http://localhost:3000 node tests/visual_eval/run.mjs bulb-pile  # one case
+//   RUNS=3 ...                                                           # models vary run to run; score several
 //
 // The server must run with AUTH_MODE=local and a real model (SERVER_AI_* or your key in Settings).
 // Each run leaves items in the local owner's ledger; results are also written to tests/visual_eval/last-run.json.
@@ -16,6 +17,7 @@ import { prepareZXingModule, readBarcodes } from 'zxing-wasm/reader';
 const here = dirname(fileURLToPath(import.meta.url));
 const BASE = process.env.BASE || 'http://localhost:3000';
 const only = process.argv[2];
+const RUNS = Number(process.env.RUNS || 1);
 
 const wasmPath = join(here, '..', '..', 'node_modules', 'zxing-wasm', 'dist', 'reader', 'zxing_reader.wasm');
 prepareZXingModule({ overrides: { wasmBinary: (await readFile(wasmPath)).buffer }, fireImmediately: true });
@@ -29,7 +31,8 @@ const cases = JSON.parse(await readFile(join(here, 'cases.json'), 'utf8')).filte
 const report = [];
 let totalItems = 0, foundItems = 0, casesPassed = 0;
 
-for (const c of cases) {
+for (const c0 of cases) for (let run = 1; run <= RUNS; run++) {
+  const c = { ...c0, id: RUNS > 1 ? `${c0.id} #${run}` : c0.id };
   const form = new FormData(); const codes = [];
   for (const p of c.photos) {
     const buf = await readFile(join(here, p));
@@ -49,7 +52,7 @@ for (const c of cases) {
   const found = items.filter(i => i.found).length;
   const verdict = data.verdict.verdict;
   const verdictOk = !c.expectVerdict || c.expectVerdict.includes(verdict);
-  const banned = (c.never || []).filter(w => w === verdict || new RegExp(`\\b${w}\\b`, 'i').test(said));
+  const banned = (c.never || []).filter(w => w === verdict || new RegExp(w, 'i').test(said));
   const pass = found === items.length && verdictOk && banned.length === 0;
   totalItems += items.length; foundItems += found; if (pass) casesPassed++;
 
@@ -61,6 +64,6 @@ for (const c of cases) {
   report.push({ id: c.id, pass, found, of: items.length, verdict, ms, model: data.model, items, name: data.verdict.name, codes, full: data.verdict });
 }
 
-console.log(`\n${casesPassed}/${cases.length} cases pass, ${foundItems}/${totalItems} items found.`);
+console.log(`\n${casesPassed}/${cases.length * RUNS} runs pass, ${foundItems}/${totalItems} items found.`);
 await writeFile(join(here, 'last-run.json'), JSON.stringify({ at: new Date().toISOString(), base: BASE, report }, null, 2));
-process.exit(casesPassed === cases.length ? 0 : 1);
+process.exit(casesPassed === cases.length * RUNS ? 0 : 1);
