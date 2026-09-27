@@ -23,7 +23,8 @@
 - [ ] Final domain (see README) and move the app to it
 - [ ] Ask Gozo SPCA how they want to receive proceeds; add a "send proceeds" step with their details
 - [ ] Better "build" suggestions using pgvector similarity over the inventory
-- [ ] Multiple photos per item (label, connector, serial plate) for retakes
+- [x] Multiple photos per item (up to 3), paste (⌘V) and drag-and-drop on desktop
+- [x] On-device barcode and QR reading; Matter QR codes looked up in the official CSA registry
 - [ ] Photo storage on Cloudflare R2 / S3 (driver swap in `web/src/lib/storage.ts`)
 - [ ] Offline queue: shoot now, judge when back online
 
