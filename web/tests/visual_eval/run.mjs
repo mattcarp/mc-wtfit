@@ -11,14 +11,13 @@
 import { readFile, writeFile } from 'node:fs/promises';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { createRequire } from 'node:module';
 import { prepareZXingModule, readBarcodes } from 'zxing-wasm/reader';
 
 const here = dirname(fileURLToPath(import.meta.url));
 const BASE = process.env.BASE || 'http://localhost:3000';
 const only = process.argv[2];
 
-const wasmPath = join(dirname(createRequire(import.meta.url).resolve('zxing-wasm/reader')), 'zxing_reader.wasm');
+const wasmPath = join(here, '..', '..', 'node_modules', 'zxing-wasm', 'dist', 'reader', 'zxing_reader.wasm');
 prepareZXingModule({ overrides: { wasmBinary: (await readFile(wasmPath)).buffer }, fireImmediately: true });
 
 async function detect(buf) {
