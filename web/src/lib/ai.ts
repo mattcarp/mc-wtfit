@@ -21,7 +21,7 @@ export const verdictSchema = z.object({
   jobInYourLife: z.string().nullable().describe('For keep: the job it does for them. Otherwise null.'),
   buildIdea: z.string().nullable().describe('For build: the concrete thing to make, naming what it pairs with. Otherwise null.'),
   pairsWith: z.array(z.string()).describe('Names of items from their inventory or gear it pairs with (can be empty)'),
-  mightBeOnlyOne: z.boolean().describe('true if it looks like a power supply, charger, remote or cable that may be the only one for a device they own'),
+  mightBeOnlyOne: z.boolean().describe('true only if it looks like the charger, power supply, remote or cable for a specific device they own (list that device in pairsWith)'),
   hasStorageOrAccount: z.boolean().describe('true if the device may hold personal data or be linked to an account'),
   wipeChecklist: z.array(z.string()).describe('If hasStorageOrAccount: concrete wipe/unlink steps. Otherwise empty.'),
   retakeTip: z.string().nullable().describe('For retake: exactly what to photograph next (label, connector end, serial plate, another angle)'),
@@ -138,7 +138,12 @@ export async function analyzePhoto(opts: { image: Buffer; mime: string; context:
 export function normalize(v: Verdict): Verdict {
   const out = { ...v };
   if (!out.identified || out.confidence < 55) out.verdict = 'retake';
-  if (out.verdict === 'let_go' && out.mightBeOnlyOne) out.verdict = 'keep';
+  // Only override a sale if the model can name something they own that this might power or control.
+  if (out.verdict === 'let_go' && out.mightBeOnlyOne && out.pairsWith.length > 0) {
+    out.verdict = 'keep';
+    out.jobInYourLife = out.jobInYourLife || `It may be the only one for your ${out.pairsWith.join(', ')}. Check before letting it go.`;
+    out.reason = `${out.reason} Kept for now: it may be the only one for your ${out.pairsWith.join(', ')}.`;
+  }
   if (out.valueHigh < out.valueLow) [out.valueLow, out.valueHigh] = [out.valueHigh, out.valueLow];
   if (out.verdict !== 'let_go') out.listing = null;
   if (out.verdict === 'retake' && !out.retakeTip) out.retakeTip = 'Photograph the label, the connector end or the serial plate, in good light.';
