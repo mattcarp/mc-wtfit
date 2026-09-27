@@ -58,7 +58,7 @@ for (const c of cases) {
   if (codes.length) console.log(`      codes: ${codes.map(x => `${x.format} ${x.text.startsWith('MT:') ? 'MT:…' : x.text}`).join(', ')}`);
   for (const i of items) console.log(`      ${i.found ? '+' : '-'} ${i.name}`);
   if (banned.length) console.log(`      ! should never say: ${banned.join(', ')}`);
-  report.push({ id: c.id, pass, found, of: items.length, verdict, ms, model: data.model, items, name: data.verdict.name, codes });
+  report.push({ id: c.id, pass, found, of: items.length, verdict, ms, model: data.model, items, name: data.verdict.name, codes, full: data.verdict });
 }
 
 console.log(`\n${casesPassed}/${cases.length} cases pass, ${foundItems}/${totalItems} items found.`);
