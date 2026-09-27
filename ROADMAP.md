@@ -28,9 +28,10 @@
 - [ ] Offline queue: shoot now, judge when back online
 
 ## Native apps
-- [ ] iPhone app: opens straight into the camera, one tap to send. Same backend API
-- [ ] Android app: same
-- Likely approach: Expo (React Native) sharing the API, so both come from one codebase
+- [x] Android app: signed APK, camera opens on tap, released as v0.1.0 (`mobile/android`)
+- [x] iPhone app: Xcode project builds and runs (`mobile/ios`); TestFlight as soon as the Apple Developer membership is active
+- [ ] iPhone: upload to TestFlight, invite friends
+- Built with Capacitor 7: native shells around the live app, so features ship to both phones at once
 - The web app already covers both phones today; native adds instant camera launch, share-sheet ("What the fuck is this?" from Photos), and push when a listing sells
 
 ## Listing automation (later)

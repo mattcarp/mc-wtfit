@@ -82,6 +82,7 @@ Then pick a brain in **Settings**: your own Anthropic, OpenAI or Google key, or 
 ```
 site/        Static landing page (also served by the app at /)
 web/         The app: Next.js, API routes, migrations, Dockerfile
+mobile/      iPhone and Android apps (Capacitor)
 docs/        Concept
 ROADMAP.md   What's done, what's next (native iPhone and Android apps included)
 ```
