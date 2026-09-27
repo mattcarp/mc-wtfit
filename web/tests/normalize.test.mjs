@@ -26,3 +26,10 @@ test('swapped value range is fixed', () => {
   const v = normalize({ ...base, valueLow: 20, valueHigh: 5 });
   assert.deepEqual([v.valueLow, v.valueHigh], [5, 20]);
 });
+test('pile: unsure items become retake, value is the sum, a pile of one is not a pile', () => {
+  const it = (o) => ({ name: 'x', count: 1, evidence: 'e', confidence: 90, verdict: 'let_go', reason: 'r', valueLow: 1, valueHigh: 2, powerPort: null, ...o });
+  const v = normalize({ ...base, pile: [it({ valueLow: 10, valueHigh: 20 }), it({ confidence: 30 }), it({ valueLow: 5, valueHigh: 3 })] });
+  assert.equal(v.pile[1].verdict, 'retake');
+  assert.deepEqual([v.valueLow, v.valueHigh], [14, 27]);
+  assert.equal(normalize({ ...base, pile: [it({})] }).pile.length, 0);
+});

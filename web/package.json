@@ -10,7 +10,7 @@
     "start": "node scripts/migrate.mjs && next start",
     "migrate": "node scripts/migrate.mjs",
     "typecheck": "tsc --noEmit",
-    "test": "node --test --experimental-strip-types tests/"
+    "test": "node --test --experimental-strip-types tests/*.test.*"
   },
   "dependencies": {
     "@ai-sdk/anthropic": "^2",
